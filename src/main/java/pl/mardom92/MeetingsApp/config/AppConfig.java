@@ -1,4 +1,4 @@
-package config;
+package pl.mardom92.MeetingsApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
