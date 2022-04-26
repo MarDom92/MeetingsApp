@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.model;
+package pl.mardom92.MeetingsApp.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

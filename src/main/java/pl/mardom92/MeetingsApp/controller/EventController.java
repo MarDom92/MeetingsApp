@@ -2,7 +2,7 @@ package pl.mardom92.MeetingsApp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.mardom92.MeetingsApp.model.Event;
+import pl.mardom92.MeetingsApp.model.entity.Event;
 import pl.mardom92.MeetingsApp.service.EventService;
 
 import java.util.List;
