@@ -3,10 +3,7 @@ package pl.mardom92.MeetingsApp.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,8 +17,12 @@ public class Event {
     private String title;
     private String description;
     private String place;
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
+    @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+    @Column(name = "start_date")
     private LocalDateTime startDate;
+    @Column(name = "end_date")
     private LocalDateTime endDate;
 }
