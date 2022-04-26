@@ -12,7 +12,12 @@ public class EventDtoBuilder {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public EventDtoBuilder withId(String title) {
+    public EventDtoBuilder withId(long id) {
+        this.title = title;
+        return this;
+    }
+
+    public EventDtoBuilder withTitle(String title) {
         this.title = title;
         return this;
     }

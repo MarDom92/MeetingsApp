@@ -2,6 +2,7 @@ package pl.mardom92.MeetingsApp.model.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.EventBuilder;
+import pl.mardom92.MeetingsApp.model.builder.EventDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 
@@ -39,5 +40,40 @@ public class EventMapper {
         }
 
         return eventBuilder.build();
+    }
+
+    public EventDto fromEntityToDto(Event event) {
+
+        if (event == null) {
+            return null;
+        }
+
+        EventDtoBuilder eventDtoBuilder = new EventDtoBuilder();
+
+        if (event.getId() > 0) {
+            eventDtoBuilder.withId(event.getId());
+        }
+
+        if (Objects.nonNull(event.getTitle())) {
+            eventDtoBuilder.withTitle(event.getTitle());
+        }
+
+        if (Objects.nonNull(event.getDescription())) {
+            eventDtoBuilder.withDescription(event.getDescription());
+        }
+
+        if (Objects.nonNull(event.getPlace())) {
+            eventDtoBuilder.withPlace(event.getPlace());
+        }
+
+        if (Objects.nonNull(event.getStartDate())) {
+            eventDtoBuilder.withStarDate(event.getStartDate());
+        }
+
+        if (Objects.nonNull(event.getEndDate())) {
+            eventDtoBuilder.withEndDate(event.getEndDate());
+        }
+
+        return eventDtoBuilder.build();
     }
 }
