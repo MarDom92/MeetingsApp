@@ -54,6 +54,7 @@ public class EventDtoBuilder {
         eventDto.setTitle(title);
         eventDto.setDescription(description);
         eventDto.setPlace(place);
+        eventDto.setCommentList(commentList);
         eventDto.setStartDate(startDate);
         eventDto.setEndDate(endDate);
 
