@@ -30,9 +30,9 @@ public class EventController {
         return eventService.addEvent(eventDto);
     }
 
-    @PutMapping("/")
-    public Event editEvent(@RequestBody Event event) {
-        return eventService.editEvent(event);
+    @PutMapping("/{id}")
+    public EventDto editEvent(@PathVariable long id, @RequestBody EventDto eventDto) {
+        return eventService.editEvent(id, eventDto);
     }
 
     @DeleteMapping("/{id}")

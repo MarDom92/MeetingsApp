@@ -46,26 +46,28 @@ public class EventService {
         event.setCreatedDate(LocalDateTime.now());
         event.setUpdatedDate(LocalDateTime.now());
 
-        List<Event> events = eventRepository.findAll();
-
         eventRepository.save(event);
 
         return eventMapper.fromEntityToDto(event);
     }
 
-    public Event editEvent(Event event) {
+    public EventDto editEvent(long id, EventDto eventDto) {
 
-        //TODO: poprawić na edytowanie po id
-        Event eventEdited = eventRepository.findById(event.getId()).orElseThrow();
+        eventServiceHelper.checkEventValues(eventDto);
 
-        eventEdited.setTitle(eventEdited.getTitle());
-        eventEdited.setDescription(eventEdited.getDescription());
-        eventEdited.setPlace(eventEdited.getPlace());
-        eventEdited.setUpdatedDate(eventEdited.getUpdatedDate());
-        eventEdited.setStartDate(eventEdited.getStartDate());
-        eventEdited.setEndDate(eventEdited.getEndDate());
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
 
-        return eventRepository.save(event);
+        event.setTitle(eventDto.getTitle());
+        event.setDescription(eventDto.getDescription());
+        event.setPlace(eventDto.getPlace());
+        event.setUpdatedDate(LocalDateTime.now());
+        event.setStartDate(event.getStartDate());
+        event.setEndDate(event.getEndDate());
+
+        eventRepository.save(event);
+
+        return eventMapper.fromEntityToDto(event);
     }
 
     public void deleteEvent(long id) {
@@ -78,12 +80,6 @@ public class EventService {
     public Event checkEvent(long id) {
 
         return eventRepository.findById(id)
-                .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
-    }
-
-    public Event checkEvent(String title) {
-
-        return eventRepository.findByTitle(title)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
     }
 }
