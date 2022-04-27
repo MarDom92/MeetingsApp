@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
-import pl.mardom92.MeetingsApp.service.CommentService;
+import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
 import java.util.List;
 

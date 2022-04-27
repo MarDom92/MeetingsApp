@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.service;
+package pl.mardom92.MeetingsApp.service.event;
 
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;

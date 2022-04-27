@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.service;
+package pl.mardom92.MeetingsApp.service.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
