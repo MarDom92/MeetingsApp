@@ -31,6 +31,10 @@ public class EventMapper {
             eventBuilder.withPlace(eventDto.getPlace());
         }
 
+        if (Objects.nonNull(eventDto.getCommentList())) {
+            eventBuilder.withCommentList(eventDto.getCommentList());
+        }
+
         if (Objects.nonNull(eventDto.getStartDate())) {
             eventBuilder.withStartDate(eventDto.getStartDate());
         }
@@ -64,6 +68,10 @@ public class EventMapper {
 
         if (Objects.nonNull(event.getPlace())) {
             eventDtoBuilder.withPlace(event.getPlace());
+        }
+
+        if (Objects.nonNull(event.getCommentList())) {
+            eventDtoBuilder.withCommentList(event.getCommentList());
         }
 
         if (Objects.nonNull(event.getStartDate())) {

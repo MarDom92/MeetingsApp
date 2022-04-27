@@ -5,30 +5,19 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Event {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
     private long id;
     private String title;
     private String description;
-    private String place;
-
-    @OneToMany
-    @JoinColumn(name = "comment_id")
-    private List<Comment> commentList;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
 }
