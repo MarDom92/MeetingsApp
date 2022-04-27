@@ -13,11 +13,14 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
     private long id;
     private String title;
     private String description;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private Event event;
 }

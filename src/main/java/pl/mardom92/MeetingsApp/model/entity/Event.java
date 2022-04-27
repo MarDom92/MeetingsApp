@@ -19,8 +19,7 @@ public class Event {
     private String description;
     private String place;
 
-    @OneToMany
-    @JoinColumn(name = "comment_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
     private List<Comment> commentList;
 
     @Column(name = "created_date")
