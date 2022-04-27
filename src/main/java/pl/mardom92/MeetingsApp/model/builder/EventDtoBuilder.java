@@ -1,14 +1,19 @@
 package pl.mardom92.MeetingsApp.model.builder;
 
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
+import pl.mardom92.MeetingsApp.model.entity.Comment;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventDtoBuilder {
 
     private String title;
     private String description;
     private String place;
+
+    private List<Comment> commentList;
+
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
@@ -29,6 +34,11 @@ public class EventDtoBuilder {
 
     public EventDtoBuilder withPlace(String place) {
         this.place = place;
+        return this;
+    }
+
+    public EventDtoBuilder withCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
         return this;
     }
 
