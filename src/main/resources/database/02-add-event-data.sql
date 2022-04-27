@@ -29,4 +29,34 @@ insert into event(title, description, place, created_date, updated_date, start_d
 values ('Event 9', 'Description 9', 'Sosnowiec', '2019-09-01T13:14:05.562673800', '2020-09-01T13:14:05.574458300', '2021-09-01T13:14:05.602757600', '2022-09-01T13:14:05.616423900');
 
 insert into event(title, description, place, created_date, updated_date, start_date, end_date)
-values ('Event 10', 'Description 1', 'Radom', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+values ('Event 10', 'Description 10', 'Radom', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 11', 'Description 11', 'Olsztyn', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 12', 'Description 12', 'Białystok', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 13', 'Description 13', 'Toruń', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 14', 'Description 14', 'Sopot', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 15', 'Description 15', 'Gdynia', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 16', 'Description 16', 'Otwock', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 17', 'Description 17', 'Sulejówek', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 18', 'Description 18', 'Pruszków', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 19', 'Description 19', 'Wołomin', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
+
+insert into event(title, description, place, created_date, updated_date, start_date, end_date)
+values ('Event 20', 'Description 20', 'Świebodzin', '2019-01-01T13:14:05.562673800', '2020-10-01T13:14:05.574458300', '2021-10-01T13:14:05.602757600', '2022-10-01T13:14:05.616423900');
