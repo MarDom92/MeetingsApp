@@ -14,12 +14,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private long event_id;
+
     private String title;
     private String description;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

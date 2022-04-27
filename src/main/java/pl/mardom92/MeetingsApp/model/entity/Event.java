@@ -15,11 +15,13 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String title;
     private String description;
     private String place;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "event_id", updatable = false, insertable = false)
     private List<Comment> commentList;
 
     @Column(name = "created_date")
