@@ -32,13 +32,20 @@ public class CommentService {
         return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
-    public List<CommentDto> getAllCommentsOfSingleEvent(long id) {
+    public List<Comment> getAllCommentsOfSingleEvent(long id) {
 
         List<Comment> comments = commentRepository.findAllByEventId(id);
 
         commentServiceHelper.checkEmptyList(comments);
 
-        return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
+        return comments;
+    }
+
+    public List<CommentDto> getAllCommentsDtoOfSingleEvent(long id) {
+
+        List<Comment> commentsDto = getAllCommentsOfSingleEvent(id);
+
+        return commentsDto.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public CommentDto getSingleComment(long id) {

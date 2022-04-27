@@ -2,20 +2,16 @@ package pl.mardom92.MeetingsApp.service.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
-import pl.mardom92.MeetingsApp.model.mapper.CommentMapper;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
-import pl.mardom92.MeetingsApp.repository.CommentRepository;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,21 +45,9 @@ public class EventService {
 
         Event event = checkEvent(id);
 
-        List<CommentDto> commentsDto = commentService.getAllCommentsOfSingleEvent(id);
+        List<Comment> comments = commentService.getAllCommentsOfSingleEvent(id);
 
-        List<Comment> comments123 = new ArrayList<>();
-
-//        for (CommentDto commentDto : commentsDto) {
-//            comments.add(commentMapper.fromDtoToEntity(commentDto));
-//        }
-
-        Comment com = new Comment();
-        com.setEvent_id(111);
-        com.setTitle("dsakdhsai udhsuida hsiau hd");
-
-        comments123.add(com);
-
-        event.setCommentList(comments123);
+        event.setCommentList(comments);
 
         return eventMapper.fromEntityToDto(event);
     }
