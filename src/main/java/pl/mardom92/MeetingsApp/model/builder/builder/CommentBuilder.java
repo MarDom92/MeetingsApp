@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 public class CommentBuilder {
 
     private long id;
+
+    private long event_id;
+
     private String title;
     private String description;
 
@@ -14,6 +17,11 @@ public class CommentBuilder {
 
     public CommentBuilder withId(long id) {
         this.id = id;
+        return this;
+    }
+
+    public CommentBuilder withEventId(long event_id) {
+        this.event_id = event_id;
         return this;
     }
 
@@ -37,6 +45,7 @@ public class CommentBuilder {
         Comment comment = new Comment();
 
         comment.setId(id);
+        comment.setEvent_id(event_id);
         comment.setTitle(title);
         comment.setDescription(description);
         comment.setCreatedDate(createdDate);
