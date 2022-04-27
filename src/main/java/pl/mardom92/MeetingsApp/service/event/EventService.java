@@ -27,8 +27,6 @@ public class EventService {
     private final EventMapper eventMapper;
     private final EventServiceHelper eventServiceHelper;
 
-    private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
     private final CommentService commentService;
 
     public List<EventDto> getAllEvents() {
