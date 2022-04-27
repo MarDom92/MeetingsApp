@@ -32,6 +32,15 @@ public class CommentService {
         return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
+    public List<CommentDto> getAllCommentsOfSingleEvent(long id) {
+
+        List<Comment> comments = commentRepository.findAllByEventId(id);
+
+        commentServiceHelper.checkEmptyList(comments);
+
+        return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
+    }
+
     public CommentDto getSingleComment(long id) {
 
         Comment comment = checkComment(id);
