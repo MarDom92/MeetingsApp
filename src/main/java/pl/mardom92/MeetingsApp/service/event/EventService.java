@@ -1,11 +1,11 @@
-package pl.mardom92.MeetingsApp.service;
+package pl.mardom92.MeetingsApp.service.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Event;
-import pl.mardom92.MeetingsApp.model.exception.EventError;
-import pl.mardom92.MeetingsApp.model.exception.EventException;
+import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
+import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 

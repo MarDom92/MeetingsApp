@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.model.exception;
+package pl.mardom92.MeetingsApp.model.exception.eventException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

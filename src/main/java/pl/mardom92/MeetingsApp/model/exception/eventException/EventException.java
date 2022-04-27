@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.model.exception;
+package pl.mardom92.MeetingsApp.model.exception.eventException;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
