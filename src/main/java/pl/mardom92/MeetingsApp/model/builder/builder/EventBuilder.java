@@ -1,4 +1,4 @@
-package pl.mardom92.MeetingsApp.model.builder;
+package pl.mardom92.MeetingsApp.model.builder.builder;
 
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
@@ -8,6 +8,7 @@ import java.util.List;
 
 public class EventBuilder {
 
+    private long id;
     private String title;
     private String description;
     private String place;
@@ -18,6 +19,11 @@ public class EventBuilder {
     private LocalDateTime updatedDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
+    public EventBuilder withId(long id) {
+        this.id = id;
+        return this;
+    }
 
     public EventBuilder withTitle(String title) {
         this.title = title;
@@ -63,6 +69,7 @@ public class EventBuilder {
 
         Event event = new Event();
 
+        event.setId(id);
         event.setTitle(title);
         event.setDescription(description);
         event.setPlace(place);

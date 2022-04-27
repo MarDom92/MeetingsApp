@@ -1,8 +1,8 @@
 package pl.mardom92.MeetingsApp.model.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.mardom92.MeetingsApp.model.builder.EventBuilder;
-import pl.mardom92.MeetingsApp.model.builder.EventDtoBuilder;
+import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
+import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 
@@ -53,10 +53,6 @@ public class EventMapper {
         }
 
         EventDtoBuilder eventDtoBuilder = new EventDtoBuilder();
-
-        if (event.getId() > 0) {
-            eventDtoBuilder.withId(event.getId());
-        }
 
         if (Objects.nonNull(event.getTitle())) {
             eventDtoBuilder.withTitle(event.getTitle());
