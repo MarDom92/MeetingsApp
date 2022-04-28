@@ -1,7 +1,10 @@
 package pl.mardom92.MeetingsApp.service.comment;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentError;
@@ -23,9 +26,19 @@ public class CommentService {
     private final CommentMapper commentMapper;
     private final CommentServiceHelper commentServiceHelper;
 
-    public List<CommentDto> getAllComments() {
+    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
 
-        List<Comment> comments = commentRepository.findAll();
+        Page<Comment> comments;
+
+        if (size == null || size <= 0) {
+            size = commentRepository.findAll().size();
+        }
+
+        if (page == null || page < 1) {
+            page = 1;
+        }
+
+        comments = commentRepository.findAll(PageRequest.of(page - 1, size));
 
         commentServiceHelper.checkEmptyList(comments);
 

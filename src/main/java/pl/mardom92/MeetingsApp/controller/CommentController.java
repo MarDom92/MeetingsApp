@@ -15,8 +15,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/all")
-    public List<CommentDto> getAllComments() {
-        return commentService.getAllComments();
+    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+        return commentService.getAllComments(page, size);
     }
 
     @GetMapping("/{id}")
