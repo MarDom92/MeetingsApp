@@ -2,6 +2,7 @@ package pl.mardom92.MeetingsApp.model.builder.builder;
 
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +13,8 @@ public class EventBuilder {
     private String title;
     private String description;
     private String place;
+
+    private EventStatus status;
 
     private List<Comment> commentList;
 
@@ -37,6 +40,11 @@ public class EventBuilder {
 
     public EventBuilder withPlace(String place) {
         this.place = place;
+        return this;
+    }
+
+    public EventBuilder withStatus(EventStatus status) {
+        this.status = status;
         return this;
     }
 

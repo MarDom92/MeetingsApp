@@ -2,6 +2,7 @@ package pl.mardom92.MeetingsApp.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +20,10 @@ public class Event {
     private String title;
     private String description;
     private String place;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private EventStatus status;
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "event_id", updatable = false, insertable = false)

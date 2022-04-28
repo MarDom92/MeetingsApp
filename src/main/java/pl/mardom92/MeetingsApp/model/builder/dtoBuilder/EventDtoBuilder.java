@@ -2,6 +2,7 @@ package pl.mardom92.MeetingsApp.model.builder.dtoBuilder;
 
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +12,8 @@ public class EventDtoBuilder {
     private String title;
     private String description;
     private String place;
+
+    private EventStatus status;
 
     private List<Comment> commentList;
 
@@ -29,6 +32,11 @@ public class EventDtoBuilder {
 
     public EventDtoBuilder withPlace(String place) {
         this.place = place;
+        return this;
+    }
+
+    public EventDtoBuilder withStatus(EventStatus status) {
+        this.status = status;
         return this;
     }
 
@@ -54,6 +62,7 @@ public class EventDtoBuilder {
         eventDto.setTitle(title);
         eventDto.setDescription(description);
         eventDto.setPlace(place);
+        eventDto.setStatus(status);
         eventDto.setCommentList(commentList);
         eventDto.setStartDate(startDate);
         eventDto.setEndDate(endDate);

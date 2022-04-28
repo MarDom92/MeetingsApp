@@ -6,6 +6,7 @@ CREATE TABLE EVENT(
     title VARCHAR(400) NOT NULL,
     description VARCHAR(2000) NULL,
     place VARCHAR(400) NULL,
+    status VARCHAR(100),
     created_date timestamp,
     updated_date timestamp,
     start_date timestamp,

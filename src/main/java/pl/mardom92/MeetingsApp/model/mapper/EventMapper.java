@@ -31,6 +31,10 @@ public class EventMapper {
             eventBuilder.withPlace(eventDto.getPlace());
         }
 
+        if (Objects.nonNull(eventDto.getStatus())) {
+            eventBuilder.withStatus(eventDto.getStatus());
+        }
+
         if (Objects.nonNull(eventDto.getCommentList())) {
             eventBuilder.withCommentList(eventDto.getCommentList());
         }
@@ -64,6 +68,10 @@ public class EventMapper {
 
         if (Objects.nonNull(event.getPlace())) {
             eventDtoBuilder.withPlace(event.getPlace());
+        }
+
+        if (Objects.nonNull(event.getStatus())) {
+            eventDtoBuilder.withStatus(event.getStatus());
         }
 
         if (Objects.nonNull(event.getCommentList())) {
