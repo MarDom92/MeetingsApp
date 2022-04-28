@@ -14,7 +14,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<CommentDto> getAllComments() {
         return commentService.getAllComments();
     }

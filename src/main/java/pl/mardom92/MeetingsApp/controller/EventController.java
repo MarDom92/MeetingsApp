@@ -14,9 +14,9 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping("/")
-    public List<EventDto> getAllEvents() {
-        return eventService.getAllEvents();
+    @GetMapping("/all")
+    public List<EventDto> getAllEvents(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+        return eventService.getAllEvents(page, size);
     }
 
     @GetMapping("/{id}")

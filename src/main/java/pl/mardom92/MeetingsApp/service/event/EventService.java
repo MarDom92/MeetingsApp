@@ -1,7 +1,10 @@
 package pl.mardom92.MeetingsApp.service.event;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
@@ -25,9 +28,19 @@ public class EventService {
 
     private final CommentService commentService;
 
-    public List<EventDto> getAllEvents() {
+    public List<EventDto> getAllEvents(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
 
-        List<Event> events = eventRepository.findAll();
+        Page<Event> events;
+
+        if (size == null || size <= 0) {
+            size = eventRepository.findAll().size();
+        }
+
+        if (page == null || page < 1) {
+            page = 1;
+        }
+
+        events = eventRepository.findAll(PageRequest.of(page - 1, size));
 
         eventServiceHelper.checkEmptyList(events);
 
