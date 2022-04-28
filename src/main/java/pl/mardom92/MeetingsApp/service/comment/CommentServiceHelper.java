@@ -1,6 +1,5 @@
 package pl.mardom92.MeetingsApp.service.comment;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
@@ -13,13 +12,6 @@ import java.util.List;
 
 @Component
 public class CommentServiceHelper {
-
-    protected void checkEmptyList(Page<Comment> comments) {
-
-        if (comments.isEmpty()) {
-            throw new CommentException(CommentError.COMMENT_EMPTY_LIST);
-        }
-    }
 
     protected void checkEmptyList(List<Comment> comments) {
 
