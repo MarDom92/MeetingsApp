@@ -3,6 +3,7 @@ package pl.mardom92.MeetingsApp.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
+import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.service.event.EventService;
 
 import java.util.List;
@@ -15,8 +16,16 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping("/all")
-    public List<EventDto> getAllEvents(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public List<EventDto> getAllEvents(@RequestParam(required = false) Integer page,
+                                       @RequestParam(required = false) Integer size) {
         return eventService.getAllEvents(page, size);
+    }
+
+    @GetMapping("/sta")
+    public List<EventDto> getAllEventsByStatus(@RequestParam List<EventStatus> statusList,
+                                               @RequestParam(required = false) Integer page,
+                                               @RequestParam(required = false) Integer size) {
+        return eventService.getAllEventsByStatus(statusList, page, size);
     }
 
     @GetMapping("/{id}")

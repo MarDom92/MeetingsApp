@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
@@ -28,7 +29,22 @@ public class EventService {
 
     public List<EventDto> getAllEvents(Integer page, Integer size) {
 
-        List<Event> events;
+        if (size == null || size <= 0) {
+            size = eventRepository.findAll().size();
+        }
+
+        if (page == null || page < 1) {
+            page = 1;
+        }
+
+        List<Event> events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
+
+        eventServiceHelper.checkEmptyList(events);
+
+        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+    }
+
+    public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList, Integer page, Integer size) {
 
         if (size == null || size <= 0) {
             size = eventRepository.findAll().size();
@@ -38,11 +54,11 @@ public class EventService {
             page = 1;
         }
 
-        events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
+        List<Event> eventsByStatus = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
 
-        eventServiceHelper.checkEmptyList(events);
+        eventServiceHelper.checkEmptyList(eventsByStatus);
 
-        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+        return eventsByStatus.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public EventDto getSingleEvent(long id) {
