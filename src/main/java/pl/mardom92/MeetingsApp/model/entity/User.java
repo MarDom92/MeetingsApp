@@ -6,7 +6,7 @@ import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "user_account")
 @Getter
 @Setter
 public class User {
