@@ -2,7 +2,6 @@ package pl.mardom92.MeetingsApp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 import pl.mardom92.MeetingsApp.service.user.UserService;
