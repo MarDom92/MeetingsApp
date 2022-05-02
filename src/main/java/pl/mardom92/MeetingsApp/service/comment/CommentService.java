@@ -25,7 +25,8 @@ public class CommentService {
     private final CommentMapper commentMapper;
     private final CommentServiceHelper commentServiceHelper;
 
-    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page,
+                                           @RequestParam(required = false) Integer size) {
 
         List<Comment> comments;
 

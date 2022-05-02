@@ -27,23 +27,6 @@ public class EventService {
 
     private final CommentService commentService;
 
-    public List<EventDto> getAllEvents(Integer page, Integer size) {
-
-        if (size == null || size <= 0) {
-            size = eventRepository.findAll().size();
-        }
-
-        if (page == null || page < 1) {
-            page = 1;
-        }
-
-        List<Event> events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
-
-        eventServiceHelper.checkEmptyList(events);
-
-        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
-    }
-
     public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList, Integer page, Integer size) {
 
         if (size == null || size <= 0) {
@@ -54,11 +37,17 @@ public class EventService {
             page = 1;
         }
 
-        List<Event> eventsByStatus = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
+        List<Event> events;
 
-        eventServiceHelper.checkEmptyList(eventsByStatus);
+        if (statusList == null) {
+            events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
+        } else {
+            events = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
+        }
 
-        return eventsByStatus.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+        eventServiceHelper.checkEmptyList(events);
+
+        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public EventDto getSingleEvent(long id) {
