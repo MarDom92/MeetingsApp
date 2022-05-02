@@ -35,5 +35,9 @@ public class UserServiceHelper {
         if (userDto.getLastname().trim().equals("")) {
             throw new UserException(UserError.USER_WRONG_FIELD_VALUE);
         }
+
+        if (userDto.getUserRole().toString().trim().equals("")) {
+            throw new UserException(UserError.USER_WRONG_FIELD_VALUE);
+        }
     }
 }

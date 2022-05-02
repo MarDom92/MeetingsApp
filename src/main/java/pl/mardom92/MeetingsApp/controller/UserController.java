@@ -1,10 +1,8 @@
 package pl.mardom92.MeetingsApp.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 import pl.mardom92.MeetingsApp.service.user.UserService;
@@ -22,5 +20,25 @@ public class UserController {
     public List<UserDto> getAllUsersByRole(@RequestParam(required = false) List<UserRole> role) {
 
         return userService.getAllUsersByRole(role);
+    }
+
+    @GetMapping("/{id}")
+    public UserDto getSingleUser(@PathVariable long id) {
+        return userService.getSingleUser(id);
+    }
+
+    @PostMapping("")
+    public UserDto addEUser(@RequestBody UserDto userDto) {
+        return userService.addUser(userDto);
+    }
+
+    @PutMapping("/{id}")
+    public UserDto editUser(@PathVariable long id, @RequestBody UserDto userDto) {
+        return userService.editUser(id, userDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
     }
 }
