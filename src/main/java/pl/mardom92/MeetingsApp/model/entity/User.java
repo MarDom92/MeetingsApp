@@ -32,6 +32,15 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Column(name = "is_expired")
+    boolean isExpired;
+    @Column(name = "is_locked")
+    boolean isLocked;
+    @Column(name = "is_credentials_expired")
+    boolean isCredentialsExpired;
+    @Column(name = "is_enabled")
+    boolean isEnabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -42,25 +51,23 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        //TODO: add variable
-        return true;
+
+        return !isExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        //TODO: add variable
-        return true;
+
+        return !isLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        //TODO: add variable
-        return true;
+        return !isCredentialsExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        //TODO: add variable
-        return true;
+        return isEnabled;
     }
 }
