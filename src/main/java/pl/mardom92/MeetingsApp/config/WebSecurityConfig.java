@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 import javax.annotation.Resource;
 
@@ -42,16 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable();
 
         http.httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/")
-                .hasAnyAuthority()
-                .anyRequest()
-                .authenticated()
+                .and().authorizeRequests()
+                .antMatchers("/").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/events/*").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/comments/*").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/users/*").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/events", true)
