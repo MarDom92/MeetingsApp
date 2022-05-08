@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'meetings-app'
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    container_name: meetings-app-container
+    depends_on:
+      - db
+      - liquibase
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/meetingsdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=meetingsdb
+      - POSTGRES_PORT=5432
+
+  liquibase:
+    image: 'webdevops/liquibase:postgres'
+    container_name: liquibase
+    volumes:
+      - .:/liquibase
+    environment:
+            - LIQUIBASE_CHANGELOG=liquibase-changeLog.xml
+            - LIQUIBASE_URL=jdbc:postgresql://db:5432/meetingsdb
+            - LIQUIBASE_USERNAME=postgres
+            - LIQUIBASE_PASSWORD=postgres

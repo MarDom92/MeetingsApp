@@ -15,14 +15,8 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping("/all")
-    public List<EventDto> getAllEvents(@RequestParam(required = false) Integer page,
-                                       @RequestParam(required = false) Integer size) {
-        return eventService.getAllEvents(page, size);
-    }
-
-    @GetMapping("/sta")
-    public List<EventDto> getAllEventsByStatus(@RequestParam List<EventStatus> statusList,
+    @GetMapping("")
+    public List<EventDto> getAllEventsByStatus(@RequestParam(required = false) List<EventStatus> statusList,
                                                @RequestParam(required = false) Integer page,
                                                @RequestParam(required = false) Integer size) {
         return eventService.getAllEventsByStatus(statusList, page, size);
@@ -38,7 +32,7 @@ public class EventController {
         return eventService.getSingleEventWithComments(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public EventDto addEvent(@RequestBody EventDto eventDto) {
         return eventService.addEvent(eventDto);
     }
