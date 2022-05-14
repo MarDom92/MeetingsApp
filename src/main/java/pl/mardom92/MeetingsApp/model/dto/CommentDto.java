@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 @Setter
 public class CommentDto {
 
-    private long event_id;
-
     private String title;
     private String description;
 

@@ -19,10 +19,6 @@ public class CommentMapper {
 
         CommentBuilder commentBuilder = new CommentBuilder();
 
-        if (commentDto.getEvent_id() > 0) {
-            commentBuilder.withEventId(commentDto.getEvent_id());
-        }
-
         if (Objects.nonNull(commentDto.getTitle())) {
             commentBuilder.withTitle(commentDto.getTitle());
         }
@@ -45,10 +41,6 @@ public class CommentMapper {
         }
 
         CommentDtoBuilder commentDtoBuilder = new CommentDtoBuilder();
-
-        if (comment.getEvent_id() > 0) {
-            commentDtoBuilder.withEventId(comment.getEvent_id());
-        }
 
         if (Objects.nonNull(comment.getTitle())) {
             commentDtoBuilder.withTitle(comment.getTitle());

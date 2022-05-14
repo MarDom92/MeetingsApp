@@ -13,13 +13,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@Table(name = "event")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
     private String title;
@@ -30,8 +32,10 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "event_id", updatable = false, insertable = false)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
+    @JoinColumn(name = "event_id")
     private List<Comment> commentList;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

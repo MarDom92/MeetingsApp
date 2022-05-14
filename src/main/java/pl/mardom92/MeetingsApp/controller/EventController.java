@@ -34,12 +34,12 @@ public class EventController {
 
     @PostMapping("")
     public void addEvent(@RequestBody EventDto eventDto) {
-        eventService.addEvent(eventDto);
+        eventService.addEventWithComments(eventDto);
     }
 
     @PutMapping("/{id}")
     public void editEvent(@PathVariable long id, @RequestBody EventDto eventDto) {
-        eventService.editEvent(id, eventDto);
+        eventService.editEventWithComments(id, eventDto);
     }
 
     @DeleteMapping("/{id}")

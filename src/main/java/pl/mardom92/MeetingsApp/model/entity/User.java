@@ -11,9 +11,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@Entity(name = "user_account")
 @Getter
 @Setter
+@Entity(name = "user_account")
 public class User implements UserDetails {
 
     @Id

@@ -8,6 +8,7 @@ import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
+import pl.mardom92.MeetingsApp.repository.CommentRepository;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
@@ -24,6 +25,7 @@ public class EventService {
     private final EventServiceHelper eventServiceHelper;
 
     private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
     public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList,
                                                int pageNumber,
@@ -64,29 +66,27 @@ public class EventService {
         return eventMapper.fromEntityToDto(event);
     }
 
-    public void addEvent(EventDto eventDto) {
+    public void addEventWithComments(EventDto eventDto) {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
 
         Event event = eventMapper.fromDtoToEntity(eventDto);
-
         event.setCreatedDate(LocalDateTime.now());
 
         eventRepository.save(event);
+        commentRepository.saveAll(event.getCommentList());
     }
 
-    public void editEvent(long id, EventDto eventDto) {
+    public void editEventWithComments(long id, EventDto eventDto) {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
 
         Event event = eventServiceHelper.checkEventExist(id);
-
         event = eventMapper.fromDtoToEntity(eventDto);
 
-        //TODO: fix saving comment
-        event.setCommentList(null);
         event.setId(id);
         event.setUpdatedDate(LocalDateTime.now());
+        event.setCommentList(eventDto.getCommentList());
 
         eventRepository.save(event);
     }
