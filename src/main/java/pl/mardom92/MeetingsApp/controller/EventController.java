@@ -27,11 +27,6 @@ public class EventController {
         return eventService.getSingleEvent(id);
     }
 
-    @GetMapping("/with-comments/{id}")
-    public EventDto getSingleEventWithComments(@PathVariable long id) {
-        return eventService.getSingleEventWithComments(id);
-    }
-
     @PostMapping("")
     public void addEvent(@RequestBody EventDto eventDto) {
         eventService.addEventWithComments(eventDto);

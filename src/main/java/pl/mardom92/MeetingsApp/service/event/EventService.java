@@ -55,17 +55,6 @@ public class EventService {
         return eventMapper.fromEntityToDto(event);
     }
 
-    public EventDto getSingleEventWithComments(long id) {
-
-        Event event = eventServiceHelper.checkEventExist(id);
-
-        List<Comment> comments = commentService.getAllCommentsOfSingleEvent(id);
-
-        event.setCommentList(comments);
-
-        return eventMapper.fromEntityToDto(event);
-    }
-
     public void addEventWithComments(EventDto eventDto) {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
