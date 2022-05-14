@@ -7,13 +7,10 @@ import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
-import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
-import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,39 +24,37 @@ public class EventService {
 
     private final CommentService commentService;
 
-    public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList, Integer page, Integer size) {
+    public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList,
+                                               int pageNumber,
+                                               int sizeOnPage) {
 
-        if (size == null || size <= 0) {
-            size = eventRepository.findAll().size();
-        }
+        List<Event> events = eventRepository.findAll();
 
-        if (page == null || page < 1) {
-            page = 1;
-        }
+        int sizeOfList = eventServiceHelper.checkSizeOfList(events);
 
-        List<Event> events;
+        pageNumber = eventServiceHelper.checkPageNumber(pageNumber);
 
-        if (statusList == null) {
-            events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
+        sizeOnPage = eventServiceHelper.checkSizeOnPage(sizeOnPage, sizeOfList);
+
+        if (statusList == null || statusList.isEmpty()) {
+            events = eventRepository.findAll(PageRequest.of(pageNumber - 1, sizeOnPage)).toList();
         } else {
-            events = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
+            events = eventRepository.findEventByStatusIn(statusList, PageRequest.of(pageNumber - 1, sizeOnPage));
         }
-
-        eventServiceHelper.checkEmptyList(events);
 
         return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public EventDto getSingleEvent(long id) {
 
-        Event event = checkEvent(id);
+        Event event = eventServiceHelper.checkEventExist(id);
 
         return eventMapper.fromEntityToDto(event);
     }
 
     public EventDto getSingleEventWithComments(long id) {
 
-        Event event = checkEvent(id);
+        Event event = eventServiceHelper.checkEventExist(id);
 
         List<Comment> comments = commentService.getAllCommentsOfSingleEvent(id);
 
@@ -68,49 +63,28 @@ public class EventService {
         return eventMapper.fromEntityToDto(event);
     }
 
-    public EventDto addEvent(EventDto eventDto) {
+    public void addEvent(EventDto eventDto) {
 
-        eventServiceHelper.checkEventValues(eventDto);
+        eventServiceHelper.checkEventDtoValues(eventDto);
 
-        Event event = eventMapper.fromDtoToEntity(eventDto);
+        Event exchangeEntity = eventMapper.fromDtoToEntity(eventDto);
 
-        event.setCreatedDate(LocalDateTime.now());
-        event.setUpdatedDate(LocalDateTime.now());
-
-        eventRepository.save(event);
-
-        return eventMapper.fromEntityToDto(event);
+        eventRepository.save(exchangeEntity);
     }
 
-    public EventDto editEvent(long id, EventDto eventDto) {
+    public void editEvent(long id, EventDto eventDto) {
 
-        eventServiceHelper.checkEventValues(eventDto);
+        eventServiceHelper.checkEventDtoValues(eventDto);
 
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
-
-        event.setTitle(eventDto.getTitle());
-        event.setDescription(eventDto.getDescription());
-        event.setPlace(eventDto.getPlace());
-        event.setUpdatedDate(LocalDateTime.now());
-        event.setStartDate(event.getStartDate());
-        event.setEndDate(event.getEndDate());
+        Event event = eventServiceHelper.checkEventExist(id);
 
         eventRepository.save(event);
-
-        return eventMapper.fromEntityToDto(event);
     }
 
     public void deleteEvent(long id) {
 
-        Event event = checkEvent(id);
+        Event event = eventServiceHelper.checkEventExist(id);
 
         eventRepository.delete(event);
-    }
-
-    public Event checkEvent(long id) {
-
-        return eventRepository.findById(id)
-                .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
     }
 }

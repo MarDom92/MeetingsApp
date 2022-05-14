@@ -16,10 +16,10 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping("")
-    public List<EventDto> getAllEventsByStatus(@RequestParam(required = false) List<EventStatus> statusList,
-                                               @RequestParam(required = false) Integer page,
-                                               @RequestParam(required = false) Integer size) {
-        return eventService.getAllEventsByStatus(statusList, page, size);
+    public List<EventDto> getAllEventsByStatus(@RequestParam(required = false, name = "status") List<EventStatus> statusList,
+                                               @RequestParam(required = false, defaultValue = "1", name = "page") Integer pageNumber,
+                                               @RequestParam(required = false, defaultValue = "0", name = "size") Integer sizeOnPage) {
+        return eventService.getAllEventsByStatus(statusList, pageNumber, sizeOnPage);
     }
 
     @GetMapping("/{id}")
@@ -27,19 +27,19 @@ public class EventController {
         return eventService.getSingleEvent(id);
     }
 
-    @GetMapping("/single/{id}")
+    @GetMapping("/with-comments/{id}")
     public EventDto getSingleEventWithComments(@PathVariable long id) {
         return eventService.getSingleEventWithComments(id);
     }
 
     @PostMapping("")
-    public EventDto addEvent(@RequestBody EventDto eventDto) {
-        return eventService.addEvent(eventDto);
+    public void addEvent(@RequestBody EventDto eventDto) {
+        eventService.addEvent(eventDto);
     }
 
     @PutMapping("/{id}")
-    public EventDto editEvent(@PathVariable long id, @RequestBody EventDto eventDto) {
-        return eventService.editEvent(id, eventDto);
+    public void editEvent(@PathVariable long id, @RequestBody EventDto eventDto) {
+        eventService.editEvent(id, eventDto);
     }
 
     @DeleteMapping("/{id}")
