@@ -44,20 +44,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.httpBasic()
-                .and().authorizeRequests()
-                .antMatchers("/").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/events/*").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/comments/*").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/users/*").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .defaultSuccessUrl("/events", true)
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll();
+//        http.httpBasic()
+//                .and().authorizeRequests()
+//                .antMatchers("/").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/events/*").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/comments/*").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/users/*").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .defaultSuccessUrl("/events", true)
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .logoutSuccessUrl("/login")
+//                .permitAll();
+
+        http.cors().and().csrf().disable();
+
+        http.authorizeRequests().antMatchers("/**").permitAll();
     }
 }
