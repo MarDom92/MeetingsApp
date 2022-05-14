@@ -11,6 +11,7 @@ import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,9 +68,11 @@ public class EventService {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
 
-        Event exchangeEntity = eventMapper.fromDtoToEntity(eventDto);
+        Event event = eventMapper.fromDtoToEntity(eventDto);
 
-        eventRepository.save(exchangeEntity);
+        event.setCreatedDate(LocalDateTime.now());
+
+        eventRepository.save(event);
     }
 
     public void editEvent(long id, EventDto eventDto) {
@@ -77,6 +80,13 @@ public class EventService {
         eventServiceHelper.checkEventDtoValues(eventDto);
 
         Event event = eventServiceHelper.checkEventExist(id);
+
+        event = eventMapper.fromDtoToEntity(eventDto);
+
+        //TODO: fix saving comment
+        event.setCommentList(null);
+        event.setId(id);
+        event.setUpdatedDate(LocalDateTime.now());
 
         eventRepository.save(event);
     }

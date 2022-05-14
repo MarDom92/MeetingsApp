@@ -18,12 +18,12 @@ public class EventServiceHelper {
 
     private final EventRepository eventRepository;
 
-    protected int checkSizeOfList(List<Event> exchanges) {
+    protected int checkSizeOfList(List<Event> events) {
 
-        if (exchanges.isEmpty()) {
+        if (events.isEmpty()) {
             throw new EventException(EventError.EVENT_EMPTY_LIST);
         } else {
-            return exchanges.size();
+            return events.size();
         }
     }
 

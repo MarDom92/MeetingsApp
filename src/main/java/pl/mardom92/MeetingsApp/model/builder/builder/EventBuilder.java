@@ -81,6 +81,7 @@ public class EventBuilder {
         event.setTitle(title);
         event.setDescription(description);
         event.setPlace(place);
+        event.setStatus(status);
         event.setCommentList(commentList);
         event.setCreatedDate(createdDate);
         event.setUpdatedDate(updatedDate);

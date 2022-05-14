@@ -33,12 +33,12 @@ public class EventDto {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "created_date")
+    @Column(name = "start_date")
     private LocalDateTime startDate;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "created_date")
+    @Column(name = "end_date")
     private LocalDateTime endDate;
 }
