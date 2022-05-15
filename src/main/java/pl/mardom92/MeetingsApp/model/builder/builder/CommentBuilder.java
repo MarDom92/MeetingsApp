@@ -12,6 +12,7 @@ public class CommentBuilder {
     private String description;
 
     private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
     public CommentBuilder withId(long id) {
         this.id = id;
@@ -33,6 +34,11 @@ public class CommentBuilder {
         return this;
     }
 
+    public CommentBuilder withUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+        return this;
+    }
+
     public Comment build() {
 
         Comment comment = new Comment();
@@ -41,6 +47,7 @@ public class CommentBuilder {
         comment.setTitle(title);
         comment.setDescription(description);
         comment.setCreatedDate(createdDate);
+        comment.setUpdatedDate(updatedDate);
 
         return comment;
     }

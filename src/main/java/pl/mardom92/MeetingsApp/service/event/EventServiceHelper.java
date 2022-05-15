@@ -69,7 +69,7 @@ public class EventServiceHelper {
             throw new EventException(EventError.EVENT_WRONG_FIELD_VALUE);
         }
 
-        SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+        SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
             format.parse(eventDto.getStartDate().toString());

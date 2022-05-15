@@ -1,15 +1,22 @@
 package pl.mardom92.MeetingsApp.model.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
+import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
+import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 
+import java.util.List;
 import java.util.Objects;
 
 @Component
+@RequiredArgsConstructor
 public class EventMapper {
+
+    private final CommentMapper commentMapper;
 
     public Event fromDtoToEntity(EventDto eventDto) {
 
@@ -35,8 +42,17 @@ public class EventMapper {
             eventBuilder.withStatus(eventDto.getStatus());
         }
 
-        if (Objects.nonNull(eventDto.getCommentList())) {
-            eventBuilder.withCommentList(eventDto.getCommentList());
+        if (Objects.nonNull(eventDto.getCommentDtoList())) {
+            List<Comment> comments = commentMapper.fromDtosToEntities(eventDto.getCommentDtoList());
+            eventBuilder.withCommentList(comments);
+        }
+
+        if (Objects.nonNull(eventDto.getCreatedDate())) {
+            eventBuilder.withCreatedDate(eventDto.getCreatedDate());
+        }
+
+        if (Objects.nonNull(eventDto.getUpdatedDate())) {
+            eventBuilder.withUpdatedDate(eventDto.getUpdatedDate());
         }
 
         if (Objects.nonNull(eventDto.getStartDate())) {
@@ -75,7 +91,16 @@ public class EventMapper {
         }
 
         if (Objects.nonNull(event.getCommentList())) {
-            eventDtoBuilder.withCommentList(event.getCommentList());
+            List<CommentDto> commentDtos = commentMapper.fromEntitiesToDtos(event.getCommentList());
+            eventDtoBuilder.withCommentDtoList(commentDtos);
+        }
+
+        if (Objects.nonNull(event.getCreatedDate())) {
+            eventDtoBuilder.withCreatedDate(event.getCreatedDate());
+        }
+
+        if (Objects.nonNull(event.getUpdatedDate())) {
+            eventDtoBuilder.withUpdatedDate(event.getUpdatedDate());
         }
 
         if (Objects.nonNull(event.getStartDate())) {

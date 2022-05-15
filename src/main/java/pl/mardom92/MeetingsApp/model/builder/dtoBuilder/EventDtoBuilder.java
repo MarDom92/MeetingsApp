@@ -1,5 +1,7 @@
 package pl.mardom92.MeetingsApp.model.builder.dtoBuilder;
 
+import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
+import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
@@ -15,8 +17,10 @@ public class EventDtoBuilder {
 
     private EventStatus status;
 
-    private List<Comment> commentList;
+    private List<CommentDto> commentDtoList;
 
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
@@ -40,10 +44,21 @@ public class EventDtoBuilder {
         return this;
     }
 
-    public EventDtoBuilder withCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public EventDtoBuilder withCommentDtoList(List<CommentDto> commentDtoList) {
+        this.commentDtoList = commentDtoList;
         return this;
     }
+
+    public EventDtoBuilder withCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+        return this;
+    }
+
+    public EventDtoBuilder withUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+        return this;
+    }
+
 
     public EventDtoBuilder withStarDate(LocalDateTime startDate) {
         this.startDate = startDate;
@@ -63,7 +78,9 @@ public class EventDtoBuilder {
         eventDto.setDescription(description);
         eventDto.setPlace(place);
         eventDto.setStatus(status);
-        eventDto.setCommentList(commentList);
+        eventDto.setCommentDtoList(commentDtoList);
+        eventDto.setCreatedDate(createdDate);
+        eventDto.setUpdatedDate(updatedDate);
         eventDto.setStartDate(startDate);
         eventDto.setEndDate(endDate);
 

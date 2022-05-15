@@ -6,6 +6,8 @@ import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.CommentDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -31,7 +33,22 @@ public class CommentMapper {
             commentBuilder.withCreatedDate(commentDto.getCreatedDate());
         }
 
+        if (Objects.nonNull(commentDto.getUpdatedDate())) {
+            commentBuilder.withUpdatedDate(commentDto.getUpdatedDate());
+        }
+
         return commentBuilder.build();
+    }
+
+    public List<Comment> fromDtosToEntities(List<CommentDto> commentDtos) {
+
+        List<Comment> comments = new ArrayList<>();
+
+        for (CommentDto c : commentDtos) {
+            comments.add(fromDtoToEntity(c));
+        }
+
+        return comments;
     }
 
     public CommentDto fromEntityToDto(Comment comment) {
@@ -54,6 +71,21 @@ public class CommentMapper {
             commentDtoBuilder.withCreatedDate(comment.getCreatedDate());
         }
 
+        if (Objects.nonNull(comment.getCreatedDate())) {
+            commentDtoBuilder.withCreatedDate(comment.getCreatedDate());
+        }
+
         return commentDtoBuilder.build();
+    }
+
+    public List<CommentDto> fromEntitiesToDtos(List<Comment> comments) {
+
+        List<CommentDto> commentDtos = new ArrayList<>();
+
+        for (Comment c : comments) {
+            commentDtos.add(fromEntityToDto(c));
+        }
+
+        return commentDtos;
     }
 }

@@ -3,13 +3,8 @@ package pl.mardom92.MeetingsApp.service.comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
-import pl.mardom92.MeetingsApp.model.exception.commentException.CommentError;
-import pl.mardom92.MeetingsApp.model.exception.commentException.CommentException;
-import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
-import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 import pl.mardom92.MeetingsApp.model.mapper.CommentMapper;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 
@@ -20,93 +15,60 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final CommentServiceHelper commentServiceHelper;
 
-    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page,
-                                           @RequestParam(required = false) Integer size) {
+    public List<CommentDto> getAllComments(int pageNumber,
+                                           int sizeOnPage) {
 
-        List<Comment> comments;
+        List<Comment> comments = commentRepository.findAll();
 
-        if (size == null || size <= 0) {
-            size = commentRepository.findAll().size();
-        }
+        int sizeOfList = commentServiceHelper.checkSizeOfList(comments);
 
-        if (page == null || page < 1) {
-            page = 1;
-        }
+        pageNumber = commentServiceHelper.checkPageNumber(pageNumber);
 
-        comments = commentRepository.findAll(PageRequest.of(page - 1, size)).toList();
+        sizeOnPage = commentServiceHelper.checkSizeOnPage(sizeOnPage, sizeOfList);
 
-        commentServiceHelper.checkEmptyList(comments);
+        comments = commentRepository.findAll(PageRequest.of(pageNumber - 1, sizeOnPage)).toList();
 
         return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
-    public List<Comment> getAllCommentsOfSingleEvent(long id) {
+    public List<CommentDto> getAllCommentsOfSingleEvent(long id) {
 
         List<Comment> comments = commentRepository.findAllByEventId(id);
 
-        commentServiceHelper.checkEmptyList(comments);
+        commentServiceHelper.checkSizeOfList(comments);
 
-        return comments;
-    }
-
-    public List<CommentDto> getAllCommentsDtoOfSingleEvent(long id) {
-
-        List<Comment> commentsDto = getAllCommentsOfSingleEvent(id);
-
-        return commentsDto.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
+        return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public CommentDto getSingleComment(long id) {
 
-        Comment comment = checkComment(id);
+        Comment comment = commentServiceHelper.checkCommentExist(id);
 
         return commentMapper.fromEntityToDto(comment);
     }
 
-    public CommentDto addComment(CommentDto commentDto) {
+    public void editComment(long id, CommentDto commentDto) {
 
-        commentServiceHelper.checkCommentValues(commentDto);
+        commentServiceHelper.checkCommentDtoValues(commentDto);
 
-        Comment comment = commentMapper.fromDtoToEntity(commentDto);
+        Comment commentInDB = commentServiceHelper.checkCommentExist(id);
+        Comment newComment = commentMapper.fromDtoToEntity(commentDto);
 
-        comment.setCreatedDate(LocalDateTime.now());
+        commentInDB.setTitle(newComment.getTitle());
+        commentInDB.setDescription(newComment.getDescription());
+        commentInDB.setUpdatedDate(LocalDateTime.now());
 
-        commentRepository.save(comment);
-
-        return commentMapper.fromEntityToDto(comment);
-    }
-
-    public CommentDto editComment(long id, CommentDto commentDto) {
-
-        commentServiceHelper.checkCommentValues(commentDto);
-
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
-
-        comment.setTitle(commentDto.getTitle());
-        comment.setDescription(commentDto.getDescription());
-        comment.setCreatedDate(LocalDateTime.now());
-
-        commentRepository.save(comment);
-
-        return commentMapper.fromEntityToDto(comment);
+        commentRepository.save(commentInDB);
     }
 
     public void deleteComment(long id) {
 
-        Comment comment = checkComment(id);
+        Comment comment = commentServiceHelper.checkCommentExist(id);
 
         commentRepository.delete(comment);
-    }
-
-    public Comment checkComment(long id) {
-
-        return commentRepository.findById(id)
-                .orElseThrow(() -> new CommentException(CommentError.COMMENT_NOT_FOUND));
     }
 }

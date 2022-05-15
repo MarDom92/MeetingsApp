@@ -23,4 +23,10 @@ public class CommentDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
 }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import javax.persistence.Column;
@@ -28,7 +27,19 @@ public class EventDto {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    private List<Comment> commentList;
+    private List<CommentDto> commentDtoList;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)

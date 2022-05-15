@@ -15,14 +15,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("")
-    public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page,
-                                           @RequestParam(required = false) Integer size) {
-        return commentService.getAllComments(page, size);
+    public List<CommentDto> getAllComments(@RequestParam(required = false, defaultValue = "1", name = "page") Integer pageNumber,
+                                           @RequestParam(required = false, defaultValue = "0", name = "size") Integer sizeOnPage) {
+        return commentService.getAllComments(pageNumber, sizeOnPage);
     }
 
     @GetMapping("/{id}")
     public List<CommentDto> getAllCommentsOfSingleEvent(@PathVariable long id) {
-        return commentService.getAllCommentsDtoOfSingleEvent(id);
+        return commentService.getAllCommentsOfSingleEvent(id);
     }
 
     @GetMapping("/single/{id}")
@@ -30,14 +30,9 @@ public class CommentController {
         return commentService.getSingleComment(id);
     }
 
-    @PostMapping("")
-    public CommentDto addComment(@RequestBody CommentDto commentDto) {
-        return commentService.addComment(commentDto);
-    }
-
     @PutMapping("/{id}")
-    public CommentDto editComment(@PathVariable long id, @RequestBody CommentDto commentDto) {
-        return commentService.editComment(id, commentDto);
+    public void editComment(@PathVariable long id, @RequestBody CommentDto commentDto) {
+        commentService.editComment(id, commentDto);
     }
 
     @DeleteMapping("/{id}")

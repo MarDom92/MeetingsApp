@@ -10,7 +10,6 @@ import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
-import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +23,6 @@ public class EventService {
     private final EventMapper eventMapper;
     private final EventServiceHelper eventServiceHelper;
 
-    private final CommentService commentService;
     private final CommentRepository commentRepository;
 
     public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList,
@@ -60,7 +58,13 @@ public class EventService {
         eventServiceHelper.checkEventDtoValues(eventDto);
 
         Event event = eventMapper.fromDtoToEntity(eventDto);
-        event.setCreatedDate(LocalDateTime.now());
+
+        LocalDateTime now = LocalDateTime.now();
+        event.setCreatedDate(now);
+
+        for (Comment c : event.getCommentList()) {
+            c.setCreatedDate(now);
+        }
 
         eventRepository.save(event);
         commentRepository.saveAll(event.getCommentList());
@@ -71,11 +75,21 @@ public class EventService {
         eventServiceHelper.checkEventDtoValues(eventDto);
 
         Event event = eventServiceHelper.checkEventExist(id);
+
+        LocalDateTime createdDate = eventRepository.findById(id).get().getCreatedDate();
+
         event = eventMapper.fromDtoToEntity(eventDto);
 
+        LocalDateTime now = LocalDateTime.now();
+
         event.setId(id);
-        event.setUpdatedDate(LocalDateTime.now());
-        event.setCommentList(eventDto.getCommentList());
+        event.setCreatedDate(createdDate);
+        event.setUpdatedDate(now);
+
+        for (Comment c : event.getCommentList()) {
+            c.setCreatedDate(createdDate);
+            c.setUpdatedDate(now);
+        }
 
         eventRepository.save(event);
     }

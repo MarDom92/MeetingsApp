@@ -10,6 +10,7 @@ public class CommentDtoBuilder {
     private String description;
 
     private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
     public CommentDtoBuilder withTitle(String title) {
         this.title = title;
@@ -26,6 +27,11 @@ public class CommentDtoBuilder {
         return this;
     }
 
+    public CommentDtoBuilder withUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+        return this;
+    }
+
     public CommentDto build() {
 
         CommentDto commentDto = new CommentDto();
@@ -33,6 +39,7 @@ public class CommentDtoBuilder {
         commentDto.setTitle(title);
         commentDto.setDescription(description);
         commentDto.setCreatedDate(createdDate);
+        commentDto.setUpdatedDate(updatedDate);
 
         return commentDto;
     }
