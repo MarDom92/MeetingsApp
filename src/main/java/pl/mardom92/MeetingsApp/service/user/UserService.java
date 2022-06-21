@@ -3,7 +3,7 @@ package pl.mardom92.MeetingsApp.service.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
-import pl.mardom92.MeetingsApp.model.entity.User;
+import pl.mardom92.MeetingsApp.model.entity.UserEntity;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 import pl.mardom92.MeetingsApp.model.exception.userException.UserError;
 import pl.mardom92.MeetingsApp.model.exception.userException.UserException;
@@ -23,63 +23,63 @@ public class UserService {
 
     public List<UserDto> getAllUsersByRole(List<UserRole> userRoleList) {
 
-        List<User> users;
+        List<UserEntity> userEntities;
 
         if (userRoleList == null) {
-            users = userRepository.findAll();
+            userEntities = userRepository.findAll();
         } else {
-            users = userRepository.findUserByUserRoleIn(userRoleList);
+            userEntities = userRepository.findUserByUserRoleIn(userRoleList);
         }
 
-        userServiceHelper.checkEmptyList(users);
+        userServiceHelper.checkEmptyList(userEntities);
 
-        return users.stream().map(userMapper::fromEntityToDto).collect(Collectors.toList());
+        return userEntities.stream().map(userMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public UserDto getSingleUser(long id) {
 
-        User user = checkUser(id);
+        UserEntity userEntity = checkUser(id);
 
-        return userMapper.fromEntityToDto(user);
+        return userMapper.fromEntityToDto(userEntity);
     }
 
     public UserDto addUser(UserDto userDto) {
 
         userServiceHelper.checkUserValues(userDto);
 
-        User user = userMapper.fromDtoToEntity(userDto);
+        UserEntity userEntity = userMapper.fromDtoToEntity(userDto);
 
-        userRepository.save(user);
+        userRepository.save(userEntity);
 
-        return userMapper.fromEntityToDto(user);
+        return userMapper.fromEntityToDto(userEntity);
     }
 
     public UserDto editUser(long id, UserDto userDto) {
 
         userServiceHelper.checkUserValues(userDto);
 
-        User user = userRepository.findById(id)
+        UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
 
-        user.setEmail(userDto.getEmail());
-        user.setUsername(userDto.getUsername());
-        user.setFirstname(userDto.getFirstname());
-        user.setLastname(userDto.getLastname());
-        user.setUserRole(userDto.getUserRole());
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setUsername(userDto.getUsername());
+        userEntity.setFirstname(userDto.getFirstname());
+        userEntity.setLastname(userDto.getLastname());
+        userEntity.setUserRole(userDto.getUserRole());
 
-        userRepository.save(user);
+        userRepository.save(userEntity);
 
-        return userMapper.fromEntityToDto(user);
+        return userMapper.fromEntityToDto(userEntity);
     }
 
     public void deleteUser(long id) {
 
-        User user = checkUser(id);
+        UserEntity userEntity = checkUser(id);
 
-        userRepository.delete(user);
+        userRepository.delete(userEntity);
     }
 
-    public User checkUser(long id) {
+    public UserEntity checkUser(long id) {
 
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));

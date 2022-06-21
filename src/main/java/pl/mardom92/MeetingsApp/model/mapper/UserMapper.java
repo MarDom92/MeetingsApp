@@ -1,73 +1,73 @@
 package pl.mardom92.MeetingsApp.model.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.mardom92.MeetingsApp.model.builder.builder.UserBuilder;
+import pl.mardom92.MeetingsApp.model.builder.builder.UserEntityBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.UserDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
-import pl.mardom92.MeetingsApp.model.entity.User;
+import pl.mardom92.MeetingsApp.model.entity.UserEntity;
 
 import java.util.Objects;
 
 @Component
 public class UserMapper {
 
-    public User fromDtoToEntity(UserDto userDto) {
+    public UserEntity fromDtoToEntity(UserDto userDto) {
 
         if (userDto == null) {
             return null;
         }
 
-        UserBuilder userBuilder = new UserBuilder();
+        UserEntityBuilder userEntityBuilder = new UserEntityBuilder();
 
         if (Objects.nonNull(userDto.getEmail())) {
-            userBuilder.withEmail(userDto.getEmail());
+            userEntityBuilder.withEmail(userDto.getEmail());
         }
 
         if (Objects.nonNull(userDto.getUsername())) {
-            userBuilder.withUsername(userDto.getUsername());
+            userEntityBuilder.withUsername(userDto.getUsername());
         }
 
         if (Objects.nonNull(userDto.getFirstname())) {
-            userBuilder.withFirstname(userDto.getFirstname());
+            userEntityBuilder.withFirstname(userDto.getFirstname());
         }
 
         if (Objects.nonNull(userDto.getLastname())) {
-            userBuilder.withLastname(userDto.getLastname());
+            userEntityBuilder.withLastname(userDto.getLastname());
         }
 
         if (Objects.nonNull(userDto.getUserRole())) {
-            userBuilder.withUserRole(userDto.getUserRole());
+            userEntityBuilder.withUserRole(userDto.getUserRole());
         }
 
-        return userBuilder.build();
+        return userEntityBuilder.build();
     }
 
-    public UserDto fromEntityToDto(User user) {
+    public UserDto fromEntityToDto(UserEntity userEntity) {
 
-        if (user == null) {
+        if (userEntity == null) {
             return null;
         }
 
         UserDtoBuilder userDtoBuilder = new UserDtoBuilder();
 
-        if (Objects.nonNull(user.getEmail())) {
-            userDtoBuilder.withEmail(user.getEmail());
+        if (Objects.nonNull(userEntity.getEmail())) {
+            userDtoBuilder.withEmail(userEntity.getEmail());
         }
 
-        if (Objects.nonNull(user.getUsername())) {
-            userDtoBuilder.withUsername(user.getUsername());
+        if (Objects.nonNull(userEntity.getUsername())) {
+            userDtoBuilder.withUsername(userEntity.getUsername());
         }
 
-        if (Objects.nonNull(user.getFirstname())) {
-            userDtoBuilder.withFirstname(user.getFirstname());
+        if (Objects.nonNull(userEntity.getFirstname())) {
+            userDtoBuilder.withFirstname(userEntity.getFirstname());
         }
 
-        if (Objects.nonNull(user.getLastname())) {
-            userDtoBuilder.withLastname(user.getLastname());
+        if (Objects.nonNull(userEntity.getLastname())) {
+            userDtoBuilder.withLastname(userEntity.getLastname());
         }
 
-        if (Objects.nonNull(user.getUserRole())) {
-            userDtoBuilder.withUserRole(user.getUserRole());
+        if (Objects.nonNull(userEntity.getUserRole())) {
+            userDtoBuilder.withUserRole(userEntity.getUserRole());
         }
 
         return userDtoBuilder.build();

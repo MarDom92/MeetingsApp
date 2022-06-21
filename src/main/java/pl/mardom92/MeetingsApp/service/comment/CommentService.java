@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentError;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentException;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
@@ -28,7 +28,7 @@ public class CommentService {
     public List<CommentDto> getAllComments(@RequestParam(required = false) Integer page,
                                            @RequestParam(required = false) Integer size) {
 
-        List<Comment> comments;
+        List<CommentEntity> commentEntityList;
 
         if (size == null || size <= 0) {
             size = commentRepository.findAll().size();
@@ -38,74 +38,74 @@ public class CommentService {
             page = 1;
         }
 
-        comments = commentRepository.findAll(PageRequest.of(page - 1, size)).toList();
+        commentEntityList = commentRepository.findAll(PageRequest.of(page - 1, size)).toList();
 
-        commentServiceHelper.checkEmptyList(comments);
+        commentServiceHelper.checkEmptyList(commentEntityList);
 
-        return comments.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
+        return commentEntityList.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
-    public List<Comment> getAllCommentsOfSingleEvent(long id) {
+    public List<CommentEntity> getAllCommentsOfSingleEvent(long id) {
 
-        List<Comment> comments = commentRepository.findAllByEventId(id);
+        List<CommentEntity> commentEntityList = commentRepository.findAllByEventId(id);
 
-        commentServiceHelper.checkEmptyList(comments);
+        commentServiceHelper.checkEmptyList(commentEntityList);
 
-        return comments;
+        return commentEntityList;
     }
 
     public List<CommentDto> getAllCommentsDtoOfSingleEvent(long id) {
 
-        List<Comment> commentsDto = getAllCommentsOfSingleEvent(id);
+        List<CommentEntity> commentEntityList = getAllCommentsOfSingleEvent(id);
 
-        return commentsDto.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
+        return commentEntityList.stream().map(commentMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public CommentDto getSingleComment(long id) {
 
-        Comment comment = checkCommentExistById(id);
+        CommentEntity commentEntity = checkCommentExistById(id);
 
-        return commentMapper.fromEntityToDto(comment);
+        return commentMapper.fromEntityToDto(commentEntity);
     }
 
     public CommentDto addComment(CommentDto commentDto) {
 
         commentServiceHelper.checkCommentValues(commentDto);
 
-        Comment comment = commentMapper.fromDtoToEntity(commentDto);
+        CommentEntity commentEntity = commentMapper.fromDtoToEntity(commentDto);
 
-        comment.setCreatedDate(LocalDateTime.now());
+        commentEntity.setCreatedDate(LocalDateTime.now());
 
-        commentRepository.save(comment);
+        commentRepository.save(commentEntity);
 
-        return commentMapper.fromEntityToDto(comment);
+        return commentMapper.fromEntityToDto(commentEntity);
     }
 
     public CommentDto editComment(long id, CommentDto commentDto) {
 
         commentServiceHelper.checkCommentValues(commentDto);
 
-        Comment comment = commentRepository.findById(id)
+        CommentEntity commentEntity = commentRepository.findById(id)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
 
-        comment.setTitle(commentDto.getTitle());
-        comment.setDescription(commentDto.getDescription());
-        comment.setCreatedDate(LocalDateTime.now());
-        comment.setEvent_id(commentDto.getEvent_id());
+        commentEntity.setTitle(commentDto.getTitle());
+        commentEntity.setDescription(commentDto.getDescription());
+        commentEntity.setCreatedDate(LocalDateTime.now());
+        commentEntity.setEvent_id(commentDto.getEvent_id());
 
-        commentRepository.save(comment);
+        commentRepository.save(commentEntity);
 
-        return commentMapper.fromEntityToDto(comment);
+        return commentMapper.fromEntityToDto(commentEntity);
     }
 
     public void deleteComment(long id) {
 
-        Comment comment = checkCommentExistById(id);
+        CommentEntity commentEntity = checkCommentExistById(id);
 
-        commentRepository.delete(comment);
+        commentRepository.delete(commentEntity);
     }
 
-    public Comment checkCommentExistById(long id) {
+    public CommentEntity checkCommentExistById(long id) {
 
         return commentRepository.findById(id)
                 .orElseThrow(() -> new CommentException(CommentError.COMMENT_NOT_FOUND));

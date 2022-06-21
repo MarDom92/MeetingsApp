@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeSet mardom:3
 
-CREATE TABLE COMMENT(
+CREATE TABLE COMMENT_ENTITY (
     id SERIAL PRIMARY KEY,
     event_id BIGINT NOT NULL,
     title VARCHAR(400)  NOT NULL,
@@ -9,6 +9,6 @@ CREATE TABLE COMMENT(
     created_date timestamp
 );
 
-ALTER TABLE COMMENT
+ALTER TABLE COMMENT_ENTITY
     ADD CONSTRAINT comment_event_id
-    FOREIGN KEY (event_id) REFERENCES event(id)
+    FOREIGN KEY (event_id) REFERENCES eventEntity(id)

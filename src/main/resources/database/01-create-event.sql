@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeSet mardom:1
 
-CREATE TABLE EVENT(
+CREATE TABLE EVENT_ENTITY(
     id SERIAL PRIMARY KEY,
     title VARCHAR(400) NOT NULL,
     description VARCHAR(2000) NULL,

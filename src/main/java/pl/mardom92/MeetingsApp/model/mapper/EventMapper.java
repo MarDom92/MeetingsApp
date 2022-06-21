@@ -2,10 +2,10 @@ package pl.mardom92.MeetingsApp.model.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
+import pl.mardom92.MeetingsApp.model.builder.builder.EventEntityBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,87 +16,87 @@ public class EventMapper {
 
     public final CommentMapper commentMapper;
 
-    public Event fromDtoToEntity(EventDto eventDto) {
+    public EventEntity fromDtoToEntity(EventDto eventDto) {
 
         if (eventDto == null) {
             return null;
         }
 
-        EventBuilder eventBuilder = new EventBuilder();
+        EventEntityBuilder eventEntityBuilder = new EventEntityBuilder();
 
         if (Objects.nonNull(eventDto.getTitle())) {
-            eventBuilder.withTitle(eventDto.getTitle());
+            eventEntityBuilder.withTitle(eventDto.getTitle());
         }
 
         if (Objects.nonNull(eventDto.getDescription())) {
-            eventBuilder.withDescription(eventDto.getDescription());
+            eventEntityBuilder.withDescription(eventDto.getDescription());
         }
 
         if (Objects.nonNull(eventDto.getPlace())) {
-            eventBuilder.withPlace(eventDto.getPlace());
+            eventEntityBuilder.withPlace(eventDto.getPlace());
         }
 
         if (Objects.nonNull(eventDto.getStatus())) {
-            eventBuilder.withStatus(eventDto.getStatus());
+            eventEntityBuilder.withStatus(eventDto.getStatus());
         }
 
-        if (Objects.nonNull(eventDto.getCommentDtoList())) {
-            eventBuilder.withCommentList(
-                    eventDto.getCommentDtoList().stream()
+        if (Objects.nonNull(eventDto.getCommentEntityList())) {
+            eventEntityBuilder.withCommentList(
+                    eventDto.getCommentEntityList().stream()
                             .map(commentDto -> commentMapper.fromDtoToEntity(commentDto))
                             .collect(Collectors.toList())
             );
         }
 
         if (Objects.nonNull(eventDto.getStartDate())) {
-            eventBuilder.withStartDate(eventDto.getStartDate());
+            eventEntityBuilder.withStartDate(eventDto.getStartDate());
         }
 
         if (Objects.nonNull(eventDto.getEndDate())) {
-            eventBuilder.withEndDate(eventDto.getEndDate());
+            eventEntityBuilder.withEndDate(eventDto.getEndDate());
         }
 
-        return eventBuilder.build();
+        return eventEntityBuilder.build();
     }
 
-    public EventDto fromEntityToDto(Event event) {
+    public EventDto fromEntityToDto(EventEntity eventEntity) {
 
-        if (event == null) {
+        if (eventEntity == null) {
             return null;
         }
 
         EventDtoBuilder eventDtoBuilder = new EventDtoBuilder();
 
-        if (Objects.nonNull(event.getTitle())) {
-            eventDtoBuilder.withTitle(event.getTitle());
+        if (Objects.nonNull(eventEntity.getTitle())) {
+            eventDtoBuilder.withTitle(eventEntity.getTitle());
         }
 
-        if (Objects.nonNull(event.getDescription())) {
-            eventDtoBuilder.withDescription(event.getDescription());
+        if (Objects.nonNull(eventEntity.getDescription())) {
+            eventDtoBuilder.withDescription(eventEntity.getDescription());
         }
 
-        if (Objects.nonNull(event.getPlace())) {
-            eventDtoBuilder.withPlace(event.getPlace());
+        if (Objects.nonNull(eventEntity.getPlace())) {
+            eventDtoBuilder.withPlace(eventEntity.getPlace());
         }
 
-        if (Objects.nonNull(event.getStatus())) {
-            eventDtoBuilder.withStatus(event.getStatus());
+        if (Objects.nonNull(eventEntity.getStatus())) {
+            eventDtoBuilder.withStatus(eventEntity.getStatus());
         }
 
-        if (Objects.nonNull(event.getCommentList())) {
+        if (Objects.nonNull(eventEntity.getCommentEntityList())) {
             eventDtoBuilder.withCommentList(
-                    event.getCommentList().stream()
+                    eventEntity.getCommentEntityList().stream()
                             .map(commentDto -> commentMapper.fromEntityToDto(commentDto))
                             .collect(Collectors.toList())
             );
         }
 
-        if (Objects.nonNull(event.getStartDate())) {
-            eventDtoBuilder.withStarDate(event.getStartDate());
+        if (Objects.nonNull(eventEntity.getStartDate())) {
+            eventDtoBuilder.withStarDate(eventEntity.getStartDate());
         }
 
-        if (Objects.nonNull(event.getEndDate())) {
-            eventDtoBuilder.withEndDate(event.getEndDate());
+        if (Objects.nonNull(eventEntity.getEndDate())) {
+            eventDtoBuilder.withEndDate(eventEntity.getEndDate());
         }
 
         return eventDtoBuilder.build();

@@ -2,7 +2,7 @@ package pl.mardom92.MeetingsApp.service.event;
 
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 
@@ -13,9 +13,9 @@ import java.util.List;
 @Component
 public class EventServiceHelper {
 
-    protected void checkEmptyList(List<Event> events) {
+    protected void checkEmptyList(List<EventEntity> eventEntityList) {
 
-        if (events.isEmpty()) {
+        if (eventEntityList.isEmpty()) {
             throw new EventException(EventError.EVENT_EMPTY_LIST);
         }
     }

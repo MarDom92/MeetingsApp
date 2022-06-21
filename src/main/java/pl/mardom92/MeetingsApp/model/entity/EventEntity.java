@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Event {
+public class EventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "event_id", updatable = false, insertable = false)
-    private List<Comment> commentList;
+    private List<CommentEntity> commentEntityList;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

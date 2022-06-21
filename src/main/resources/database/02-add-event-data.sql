@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeSet mardom:2
 
-insert into event(id, title, description, place, status, created_date, updated_date, start_date, end_date)
+insert into event_entity (id, title, description, place, status, created_date, updated_date, start_date, end_date)
 values (1, 'Event 1', 'Description 1', 'Warszawa', 'PLANNED', '2019-01-01T13:14:05.562673800',
         '2020-01-01T13:14:05.574458300',
         '2021-01-01T13:14:05.602757600', '2022-01-01T13:14:05.616423900'),

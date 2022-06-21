@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
@@ -37,78 +37,78 @@ public class EventService {
             page = 1;
         }
 
-        List<Event> events;
+        List<EventEntity> eventEntityList;
 
         if (statusList == null) {
-            events = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
+            eventEntityList = eventRepository.findAll(PageRequest.of(page - 1, size)).toList();
         } else {
-            events = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
+            eventEntityList = eventRepository.findEventByStatusIn(statusList, PageRequest.of(page - 1, size));
         }
 
-        eventServiceHelper.checkEmptyList(events);
+        eventServiceHelper.checkEmptyList(eventEntityList);
 
-        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+        return eventEntityList.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
     }
 
     public EventDto getSingleEvent(long id) {
 
-        Event event = checkEvent(id);
+        EventEntity eventEntity = checkEvent(id);
 
-        return eventMapper.fromEntityToDto(event);
+        return eventMapper.fromEntityToDto(eventEntity);
     }
 
     public EventDto getSingleEventWithComments(long id) {
 
-        Event event = checkEvent(id);
+        EventEntity eventEntity = checkEvent(id);
 
-        List<Comment> comments = commentService.getAllCommentsOfSingleEvent(id);
+        List<CommentEntity> commentEntityList = commentService.getAllCommentsOfSingleEvent(id);
 
-        event.setCommentList(comments);
+        eventEntity.setCommentEntityList(commentEntityList);
 
-        return eventMapper.fromEntityToDto(event);
+        return eventMapper.fromEntityToDto(eventEntity);
     }
 
     public EventDto addEvent(EventDto eventDto) {
 
         eventServiceHelper.checkEventValues(eventDto);
 
-        Event event = eventMapper.fromDtoToEntity(eventDto);
+        EventEntity eventEntity = eventMapper.fromDtoToEntity(eventDto);
 
-        event.setCreatedDate(LocalDateTime.now());
-        event.setUpdatedDate(LocalDateTime.now());
+        eventEntity.setCreatedDate(LocalDateTime.now());
+        eventEntity.setUpdatedDate(LocalDateTime.now());
 
-        eventRepository.save(event);
+        eventRepository.save(eventEntity);
 
-        return eventMapper.fromEntityToDto(event);
+        return eventMapper.fromEntityToDto(eventEntity);
     }
 
     public EventDto editEvent(long id, EventDto eventDto) {
 
         eventServiceHelper.checkEventValues(eventDto);
 
-        Event event = eventRepository.findById(id)
+        EventEntity eventEntity = eventRepository.findById(id)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));
 
-        event.setTitle(eventDto.getTitle());
-        event.setDescription(eventDto.getDescription());
-        event.setPlace(eventDto.getPlace());
-        event.setUpdatedDate(LocalDateTime.now());
-        event.setStartDate(event.getStartDate());
-        event.setEndDate(event.getEndDate());
+        eventEntity.setTitle(eventDto.getTitle());
+        eventEntity.setDescription(eventDto.getDescription());
+        eventEntity.setPlace(eventDto.getPlace());
+        eventEntity.setUpdatedDate(LocalDateTime.now());
+        eventEntity.setStartDate(eventEntity.getStartDate());
+        eventEntity.setEndDate(eventEntity.getEndDate());
 
-        eventRepository.save(event);
+        eventRepository.save(eventEntity);
 
-        return eventMapper.fromEntityToDto(event);
+        return eventMapper.fromEntityToDto(eventEntity);
     }
 
     public void deleteEvent(long id) {
 
-        Event event = checkEvent(id);
+        EventEntity eventEntity = checkEvent(id);
 
-        eventRepository.delete(event);
+        eventRepository.delete(eventEntity);
     }
 
-    public Event checkEvent(long id) {
+    public EventEntity checkEvent(long id) {
 
         return eventRepository.findById(id)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));

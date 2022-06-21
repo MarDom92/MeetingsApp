@@ -63,7 +63,7 @@ public class EventDtoBuilder {
         eventDto.setDescription(description);
         eventDto.setPlace(place);
         eventDto.setStatus(status);
-        eventDto.setCommentDtoList(commentDtoList);
+        eventDto.setCommentEntityList(commentDtoList);
         eventDto.setStartDate(startDate);
         eventDto.setEndDate(endDate);
 

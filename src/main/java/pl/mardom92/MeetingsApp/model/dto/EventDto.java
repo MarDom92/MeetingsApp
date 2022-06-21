@@ -22,7 +22,7 @@ public class EventDto {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    private List<CommentDto> commentDtoList;
+    private List<CommentDto> commentEntityList;
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;

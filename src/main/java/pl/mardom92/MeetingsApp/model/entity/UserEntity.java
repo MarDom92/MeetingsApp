@@ -6,10 +6,10 @@ import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 import javax.persistence.*;
 
-@Entity(name = "user_account")
+@Entity
 @Getter
 @Setter
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,65 +1,65 @@
 package pl.mardom92.MeetingsApp.model.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.mardom92.MeetingsApp.model.builder.builder.CommentBuilder;
+import pl.mardom92.MeetingsApp.model.builder.builder.CommentEntityBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.CommentDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 
 import java.util.Objects;
 
 @Component
 public class CommentMapper {
 
-    public Comment fromDtoToEntity(CommentDto commentDto) {
+    public CommentEntity fromDtoToEntity(CommentDto commentDto) {
 
         if (commentDto == null) {
             return null;
         }
 
-        CommentBuilder commentBuilder = new CommentBuilder();
+        CommentEntityBuilder commentEntityBuilder = new CommentEntityBuilder();
 
         if (commentDto.getEvent_id() > 0) {
-            commentBuilder.withEventId(commentDto.getEvent_id());
+            commentEntityBuilder.withEventId(commentDto.getEvent_id());
         }
 
         if (Objects.nonNull(commentDto.getTitle())) {
-            commentBuilder.withTitle(commentDto.getTitle());
+            commentEntityBuilder.withTitle(commentDto.getTitle());
         }
 
         if (Objects.nonNull(commentDto.getDescription())) {
-            commentBuilder.withDescription(commentDto.getDescription());
+            commentEntityBuilder.withDescription(commentDto.getDescription());
         }
 
         if (Objects.nonNull(commentDto.getCreatedDate())) {
-            commentBuilder.withCreatedDate(commentDto.getCreatedDate());
+            commentEntityBuilder.withCreatedDate(commentDto.getCreatedDate());
         }
 
-        return commentBuilder.build();
+        return commentEntityBuilder.build();
     }
 
-    public CommentDto fromEntityToDto(Comment comment) {
+    public CommentDto fromEntityToDto(CommentEntity commentEntity) {
 
-        if (comment == null) {
+        if (commentEntity == null) {
             return null;
         }
 
         CommentDtoBuilder commentDtoBuilder = new CommentDtoBuilder();
 
-        if (comment.getEvent_id() > 0) {
-            commentDtoBuilder.withEventId(comment.getEvent_id());
+        if (commentEntity.getEvent_id() > 0) {
+            commentDtoBuilder.withEventId(commentEntity.getEvent_id());
         }
 
-        if (Objects.nonNull(comment.getTitle())) {
-            commentDtoBuilder.withTitle(comment.getTitle());
+        if (Objects.nonNull(commentEntity.getTitle())) {
+            commentDtoBuilder.withTitle(commentEntity.getTitle());
         }
 
-        if (Objects.nonNull(comment.getDescription())) {
-            commentDtoBuilder.withDescription(comment.getDescription());
+        if (Objects.nonNull(commentEntity.getDescription())) {
+            commentDtoBuilder.withDescription(commentEntity.getDescription());
         }
 
-        if (Objects.nonNull(comment.getCreatedDate())) {
-            commentDtoBuilder.withCreatedDate(comment.getCreatedDate());
+        if (Objects.nonNull(commentEntity.getCreatedDate())) {
+            commentDtoBuilder.withCreatedDate(commentEntity.getCreatedDate());
         }
 
         return commentDtoBuilder.build();
