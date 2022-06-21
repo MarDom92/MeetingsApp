@@ -63,7 +63,7 @@ public class CommentService {
 
     public CommentDto getSingleComment(long id) {
 
-        Comment comment = checkComment(id);
+        Comment comment = checkCommentExistById(id);
 
         return commentMapper.fromEntityToDto(comment);
     }
@@ -91,6 +91,7 @@ public class CommentService {
         comment.setTitle(commentDto.getTitle());
         comment.setDescription(commentDto.getDescription());
         comment.setCreatedDate(LocalDateTime.now());
+        comment.setEvent_id(commentDto.getEvent_id());
 
         commentRepository.save(comment);
 
@@ -99,12 +100,12 @@ public class CommentService {
 
     public void deleteComment(long id) {
 
-        Comment comment = checkComment(id);
+        Comment comment = checkCommentExistById(id);
 
         commentRepository.delete(comment);
     }
 
-    public Comment checkComment(long id) {
+    public Comment checkCommentExistById(long id) {
 
         return commentRepository.findById(id)
                 .orElseThrow(() -> new CommentException(CommentError.COMMENT_NOT_FOUND));
