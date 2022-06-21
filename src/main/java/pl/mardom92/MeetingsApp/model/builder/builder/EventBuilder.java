@@ -1,5 +1,6 @@
 package pl.mardom92.MeetingsApp.model.builder.builder;
 
+import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;

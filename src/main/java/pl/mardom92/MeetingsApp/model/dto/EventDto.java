@@ -2,7 +2,6 @@ package pl.mardom92.MeetingsApp.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import javax.persistence.Column;
@@ -23,7 +22,7 @@ public class EventDto {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    private List<Comment> commentList;
+    private List<CommentDto> commentDtoList;
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;

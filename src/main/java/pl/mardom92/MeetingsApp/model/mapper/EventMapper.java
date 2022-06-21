@@ -1,5 +1,6 @@
 package pl.mardom92.MeetingsApp.model.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
@@ -7,9 +8,13 @@ import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class EventMapper {
+
+    public final CommentMapper commentMapper;
 
     public Event fromDtoToEntity(EventDto eventDto) {
 
@@ -35,8 +40,12 @@ public class EventMapper {
             eventBuilder.withStatus(eventDto.getStatus());
         }
 
-        if (Objects.nonNull(eventDto.getCommentList())) {
-            eventBuilder.withCommentList(eventDto.getCommentList());
+        if (Objects.nonNull(eventDto.getCommentDtoList())) {
+            eventBuilder.withCommentList(
+                    eventDto.getCommentDtoList().stream()
+                            .map(commentDto -> commentMapper.fromDtoToEntity(commentDto))
+                            .collect(Collectors.toList())
+            );
         }
 
         if (Objects.nonNull(eventDto.getStartDate())) {
@@ -75,7 +84,11 @@ public class EventMapper {
         }
 
         if (Objects.nonNull(event.getCommentList())) {
-            eventDtoBuilder.withCommentList(event.getCommentList());
+            eventDtoBuilder.withCommentList(
+                    event.getCommentList().stream()
+                            .map(commentDto -> commentMapper.fromEntityToDto(commentDto))
+                            .collect(Collectors.toList())
+            );
         }
 
         if (Objects.nonNull(event.getStartDate())) {
