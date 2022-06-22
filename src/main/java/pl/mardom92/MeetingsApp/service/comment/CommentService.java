@@ -61,6 +61,7 @@ public class CommentService {
         commentInDB.setTitle(newComment.getTitle());
         commentInDB.setDescription(newComment.getDescription());
         commentInDB.setUpdatedDate(LocalDateTime.now());
+        commentInDB.setEvent_id(commentDto.getEvent_id());
 
         commentRepository.save(commentInDB);
     }

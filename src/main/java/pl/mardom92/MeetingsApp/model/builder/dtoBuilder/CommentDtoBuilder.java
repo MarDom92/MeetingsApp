@@ -6,11 +6,18 @@ import java.time.LocalDateTime;
 
 public class CommentDtoBuilder {
 
+    private long event_id;
+
     private String title;
     private String description;
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+
+    public CommentDtoBuilder withEventId(long event_id) {
+        this.event_id = event_id;
+        return this;
+    }
 
     public CommentDtoBuilder withTitle(String title) {
         this.title = title;
@@ -35,7 +42,8 @@ public class CommentDtoBuilder {
     public CommentDto build() {
 
         CommentDto commentDto = new CommentDto();
-        
+
+        commentDto.setEvent_id(event_id);
         commentDto.setTitle(title);
         commentDto.setDescription(description);
         commentDto.setCreatedDate(createdDate);

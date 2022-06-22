@@ -19,8 +19,9 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
+
+    private long event_id;
 
     private String title;
     private String description;
