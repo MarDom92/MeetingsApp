@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.CommentBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.CommentDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class CommentMapper {
 
-    public Comment fromDtoToEntity(CommentDto commentDto) {
+    public CommentEntity fromDtoToEntity(CommentDto commentDto) {
 
         if (commentDto == null) {
             return null;
@@ -44,14 +44,14 @@ public class CommentMapper {
         return commentBuilder.build();
     }
 
-    public List<Comment> fromDtoListToEntityList(List<CommentDto> commentDtoList) {
+    public List<CommentEntity> fromDtoListToEntityList(List<CommentDto> commentDtoList) {
 
         return commentDtoList.stream()
                 .map(commentDto -> fromDtoToEntity(commentDto))
                 .collect(Collectors.toList());
     }
 
-    public CommentDto fromEntityToDto(Comment comment) {
+    public CommentDto fromEntityToDto(CommentEntity comment) {
 
         if (comment == null) {
             return null;
@@ -82,7 +82,7 @@ public class CommentMapper {
         return commentDtoBuilder.build();
     }
 
-    public List<CommentDto> fromEntityListToDtoList(List<Comment> commentList) {
+    public List<CommentDto> fromEntityListToDtoList(List<CommentEntity> commentList) {
 
         return commentList.stream()
                 .map(comment -> fromEntityToDto(comment))

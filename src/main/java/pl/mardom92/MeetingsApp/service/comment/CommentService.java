@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 import pl.mardom92.MeetingsApp.model.mapper.CommentMapper;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 
@@ -22,7 +22,7 @@ public class CommentService {
     public List<CommentDto> getAllComments(int pageNumber,
                                            int sizeOnPage) {
 
-        List<Comment> comments = commentRepository.findAll();
+        List<CommentEntity> comments = commentRepository.findAll();
 
         int sizeOfList = commentServiceHelper.checkSizeOfList(comments);
 
@@ -37,7 +37,7 @@ public class CommentService {
 
     public List<CommentDto> getAllCommentsOfSingleEvent(long id) {
 
-        List<Comment> comments = commentRepository.findAllByEventId(id);
+        List<CommentEntity> comments = commentRepository.findAllByEventId(id);
 
         commentServiceHelper.checkSizeOfList(comments);
 
@@ -46,7 +46,7 @@ public class CommentService {
 
     public CommentDto getSingleComment(long id) {
 
-        Comment comment = commentServiceHelper.checkCommentExist(id);
+        CommentEntity comment = commentServiceHelper.checkCommentExist(id);
 
         return commentMapper.fromEntityToDto(comment);
     }
@@ -55,8 +55,8 @@ public class CommentService {
 
         commentServiceHelper.checkCommentDtoValues(commentDto);
 
-        Comment commentInDB = commentServiceHelper.checkCommentExist(id);
-        Comment newComment = commentMapper.fromDtoToEntity(commentDto);
+        CommentEntity commentInDB = commentServiceHelper.checkCommentExist(id);
+        CommentEntity newComment = commentMapper.fromDtoToEntity(commentDto);
 
         commentInDB.setTitle(newComment.getTitle());
         commentInDB.setDescription(newComment.getDescription());
@@ -68,7 +68,7 @@ public class CommentService {
 
     public void deleteComment(long id) {
 
-        Comment comment = commentServiceHelper.checkCommentExist(id);
+        CommentEntity comment = commentServiceHelper.checkCommentExist(id);
 
         commentRepository.delete(comment);
     }

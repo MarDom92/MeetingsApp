@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
@@ -29,7 +29,7 @@ public class EventService {
                                                int pageNumber,
                                                int sizeOnPage) {
 
-        List<Event> events = eventRepository.findAll();
+        List<EventEntity> events = eventRepository.findAll();
 
         int sizeOfList = eventServiceHelper.checkSizeOfList(events);
 
@@ -48,7 +48,7 @@ public class EventService {
 
     public EventDto getSingleEvent(long id) {
 
-        Event event = eventServiceHelper.checkEventExist(id);
+        EventEntity event = eventServiceHelper.checkEventExist(id);
 
         return eventMapper.fromEntityToDto(event);
     }
@@ -57,12 +57,12 @@ public class EventService {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
 
-        Event event = eventMapper.fromDtoToEntity(eventDto);
+        EventEntity event = eventMapper.fromDtoToEntity(eventDto);
 
         LocalDateTime now = LocalDateTime.now();
         event.setCreatedDate(now);
 
-        for (Comment c : event.getCommentList()) {
+        for (CommentEntity c : event.getCommentList()) {
             c.setCreatedDate(now);
         }
 
@@ -74,7 +74,7 @@ public class EventService {
 
         eventServiceHelper.checkEventDtoValues(eventDto);
 
-        Event event = eventServiceHelper.checkEventExist(id);
+        EventEntity event = eventServiceHelper.checkEventExist(id);
 
         LocalDateTime createdDate = eventRepository.findById(id).get().getCreatedDate();
 
@@ -86,7 +86,7 @@ public class EventService {
         event.setCreatedDate(createdDate);
         event.setUpdatedDate(now);
 
-        for (Comment c : event.getCommentList()) {
+        for (CommentEntity c : event.getCommentList()) {
             c.setCreatedDate(createdDate);
             c.setUpdatedDate(now);
         }
@@ -96,7 +96,7 @@ public class EventService {
 
     public void deleteEvent(long id) {
 
-        Event event = eventServiceHelper.checkEventExist(id);
+        EventEntity event = eventServiceHelper.checkEventExist(id);
 
         eventRepository.delete(event);
     }

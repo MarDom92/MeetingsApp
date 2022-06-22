@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeSet mardom:5
 
-CREATE TABLE USER_ACCOUNT(
+CREATE TABLE USER_ENTITY (
     id SERIAL PRIMARY KEY,
     email VARCHAR(200) NOT NULL,
     password VARCHAR(200) NOT NULL,

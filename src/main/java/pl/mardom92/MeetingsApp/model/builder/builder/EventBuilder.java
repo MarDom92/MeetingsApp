@@ -1,8 +1,7 @@
 package pl.mardom92.MeetingsApp.model.builder.builder;
 
-import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ public class EventBuilder {
 
     private EventStatus status;
 
-    private List<Comment> commentList;
+    private List<CommentEntity> commentList;
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
@@ -49,7 +48,7 @@ public class EventBuilder {
         return this;
     }
 
-    public EventBuilder withCommentList(List<Comment> commentList) {
+    public EventBuilder withCommentList(List<CommentEntity> commentList) {
         this.commentList = commentList;
         return this;
     }
@@ -74,9 +73,9 @@ public class EventBuilder {
         return this;
     }
 
-    public Event build() {
+    public EventEntity build() {
 
-        Event event = new Event();
+        EventEntity event = new EventEntity();
 
         event.setId(id);
         event.setTitle(title);

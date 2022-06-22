@@ -13,8 +13,8 @@ import java.util.Collections;
 
 @Getter
 @Setter
-@Entity(name = "user_account")
-public class User implements UserDetails {
+@Entity
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

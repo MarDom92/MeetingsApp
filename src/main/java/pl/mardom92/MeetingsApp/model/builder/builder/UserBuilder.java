@@ -1,6 +1,6 @@
 package pl.mardom92.MeetingsApp.model.builder.builder;
 
-import pl.mardom92.MeetingsApp.model.entity.User;
+import pl.mardom92.MeetingsApp.model.entity.UserEntity;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 public class UserBuilder {
@@ -52,9 +52,9 @@ public class UserBuilder {
         return this;
     }
 
-    public User build() {
+    public UserEntity build() {
 
-        User user = new User();
+        UserEntity user = new UserEntity();
 
         user.setId(id);
         user.setEmail(email);

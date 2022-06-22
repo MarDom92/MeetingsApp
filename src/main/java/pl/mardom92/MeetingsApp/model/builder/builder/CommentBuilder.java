@@ -1,6 +1,6 @@
 package pl.mardom92.MeetingsApp.model.builder.builder;
 
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 
 import java.time.LocalDateTime;
 
@@ -46,9 +46,9 @@ public class CommentBuilder {
         return this;
     }
 
-    public Comment build() {
+    public CommentEntity build() {
 
-        Comment comment = new Comment();
+        CommentEntity comment = new CommentEntity();
 
         comment.setId(id);
         comment.setEvent_id(event_id);

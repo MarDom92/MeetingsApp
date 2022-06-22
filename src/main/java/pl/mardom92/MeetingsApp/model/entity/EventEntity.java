@@ -16,8 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "event")
-public class Event {
+public class EventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +35,7 @@ public class Event {
             fetch = FetchType.EAGER,
             orphanRemoval = true)
     @JoinColumn(name = "event_id")
-    private List<Comment> commentList;
+    private List<CommentEntity> commentList;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)

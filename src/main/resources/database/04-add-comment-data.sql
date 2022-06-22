@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeSet mardom:4
 
-insert into comment(title, event_id, description, created_date)
+insert into comment_entity (title, event_id, description, created_date)
 values ('Comment 1', 1, 'Description of comment 1', '2022-01-01T13:14:05.562673800'),
        ('Comment 2', 2, 'Description of comment 2', '2022-02-01T13:14:05.562673800'),
        ('Comment 3', 3, 'Description of comment 3', '2022-03-01T13:14:05.562673800'),

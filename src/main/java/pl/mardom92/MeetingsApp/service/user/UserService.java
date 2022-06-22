@@ -3,7 +3,7 @@ package pl.mardom92.MeetingsApp.service.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
-import pl.mardom92.MeetingsApp.model.entity.User;
+import pl.mardom92.MeetingsApp.model.entity.UserEntity;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 import pl.mardom92.MeetingsApp.model.exception.userException.UserError;
 import pl.mardom92.MeetingsApp.model.exception.userException.UserException;
@@ -23,7 +23,7 @@ public class UserService {
 
     public List<UserDto> getAllUsersByRole(List<UserRole> userRoleList) {
 
-        List<User> users;
+        List<UserEntity> users;
 
         if (userRoleList == null) {
             users = userRepository.findAll();
@@ -38,7 +38,7 @@ public class UserService {
 
     public UserDto getSingleUser(long id) {
 
-        User user = checkUser(id);
+        UserEntity user = checkUser(id);
 
         return userMapper.fromEntityToDto(user);
     }
@@ -47,7 +47,7 @@ public class UserService {
 
         userServiceHelper.checkUserValues(userDto);
 
-        User user = userMapper.fromDtoToEntity(userDto);
+        UserEntity user = userMapper.fromDtoToEntity(userDto);
 
         userRepository.save(user);
 
@@ -58,7 +58,7 @@ public class UserService {
 
         userServiceHelper.checkUserValues(userDto);
 
-        User user = userRepository.findById(id)
+        UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
 
         user.setEmail(userDto.getEmail());
@@ -74,12 +74,12 @@ public class UserService {
 
     public void deleteUser(long id) {
 
-        User user = checkUser(id);
+        UserEntity user = checkUser(id);
 
         userRepository.delete(user);
     }
 
-    public User checkUser(long id) {
+    public UserEntity checkUser(long id) {
 
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));

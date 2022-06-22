@@ -3,7 +3,7 @@ package pl.mardom92.MeetingsApp.service.event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventError;
 import pl.mardom92.MeetingsApp.model.exception.eventException.EventException;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
@@ -18,7 +18,7 @@ public class EventServiceHelper {
 
     private final EventRepository eventRepository;
 
-    protected int checkSizeOfList(List<Event> events) {
+    protected int checkSizeOfList(List<EventEntity> events) {
 
         if (events.isEmpty()) {
             throw new EventException(EventError.EVENT_EMPTY_LIST);
@@ -49,7 +49,7 @@ public class EventServiceHelper {
         return sizeOnPage;
     }
 
-    protected Event checkEventExist(long id) {
+    protected EventEntity checkEventExist(long id) {
 
         return eventRepository.findById(id)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));

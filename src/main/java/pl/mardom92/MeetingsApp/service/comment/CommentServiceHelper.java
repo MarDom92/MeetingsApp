@@ -3,13 +3,11 @@ package pl.mardom92.MeetingsApp.service.comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
+import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentError;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentException;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
@@ -18,7 +16,7 @@ public class CommentServiceHelper {
 
     private final CommentRepository CommentRepository;
 
-    protected int checkSizeOfList(List<Comment> comments) {
+    protected int checkSizeOfList(List<CommentEntity> comments) {
 
         if (comments.isEmpty()) {
             throw new CommentException(CommentError.COMMENT_EMPTY_LIST);
@@ -49,7 +47,7 @@ public class CommentServiceHelper {
         return sizeOnPage;
     }
 
-    protected Comment checkCommentExist(long id) {
+    protected CommentEntity checkCommentExist(long id) {
 
         return CommentRepository.findById(id)
                 .orElseThrow(() -> new CommentException(CommentError.COMMENT_NOT_FOUND));

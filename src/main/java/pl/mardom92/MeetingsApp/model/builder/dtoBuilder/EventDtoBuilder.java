@@ -1,9 +1,7 @@
 package pl.mardom92.MeetingsApp.model.builder.dtoBuilder;
 
-import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 
 import java.time.LocalDateTime;

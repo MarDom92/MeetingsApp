@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Event;
+import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class EventMapper {
 
     private final CommentMapper commentMapper;
 
-    public Event fromDtoToEntity(EventDto eventDto) {
+    public EventEntity fromDtoToEntity(EventDto eventDto) {
 
         if (eventDto == null) {
             return null;
@@ -64,7 +64,7 @@ public class EventMapper {
         return eventBuilder.build();
     }
 
-    public EventDto fromEntityToDto(Event event) {
+    public EventDto fromEntityToDto(EventEntity event) {
 
         if (event == null) {
             return null;

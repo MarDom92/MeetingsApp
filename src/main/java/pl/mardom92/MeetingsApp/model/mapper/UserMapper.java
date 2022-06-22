@@ -4,14 +4,14 @@ import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.UserBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.UserDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
-import pl.mardom92.MeetingsApp.model.entity.User;
+import pl.mardom92.MeetingsApp.model.entity.UserEntity;
 
 import java.util.Objects;
 
 @Component
 public class UserMapper {
 
-    public User fromDtoToEntity(UserDto userDto) {
+    public UserEntity fromDtoToEntity(UserDto userDto) {
 
         if (userDto == null) {
             return null;
@@ -42,7 +42,7 @@ public class UserMapper {
         return userBuilder.build();
     }
 
-    public UserDto fromEntityToDto(User user) {
+    public UserDto fromEntityToDto(UserEntity user) {
 
         if (user == null) {
             return null;
