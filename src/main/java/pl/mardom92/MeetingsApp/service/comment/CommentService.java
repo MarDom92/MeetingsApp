@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
-import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
-import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.mapper.CommentMapper;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 

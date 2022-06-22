@@ -8,13 +8,11 @@ import pl.mardom92.MeetingsApp.model.exception.commentException.CommentError;
 import pl.mardom92.MeetingsApp.model.exception.commentException.CommentException;
 import pl.mardom92.MeetingsApp.repository.CommentRepository;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class CommentServiceHelper {
 
-    private final CommentRepository CommentRepository;
+    private final CommentRepository commentRepository;
 
     protected int checkSizeOfList(int size) {
 
@@ -49,7 +47,7 @@ public class CommentServiceHelper {
 
     protected CommentEntity checkCommentExist(long id) {
 
-        return CommentRepository.findById(id)
+        return commentRepository.findById(id)
                 .orElseThrow(() -> new CommentException(CommentError.COMMENT_NOT_FOUND));
     }
 

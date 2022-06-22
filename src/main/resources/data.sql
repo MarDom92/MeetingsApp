@@ -67,7 +67,7 @@ values ('Comment 1', 1, 'Description of commentEntity 1', '2022-01-01T13:14:05.5
        ('Comment 5', 5, 'Description of commentEntity 5', '2022-05-01T13:14:05.562673800'),
        ('Comment 6', 1, 'Description of commentEntity 6', '2022-05-01T13:14:05.562673800');
 
-insert into user_entity (email, password, username, firstname, lastname, role)
-values ('a@gmail.com', 'a', 'a_username', 'a_firstname', 'a_lastname', 'USER'),
-    ('b@gmail.com', 'b', 'b_username', 'b_firstname', 'b_lastname', 'USER'),
-    ('c@envelo.com', 'c', 'c_username', 'c_firstname', 'c_lastname', 'ADMIN');
+insert into user_entity (email, password, username, firstname, lastname, role, is_expired, is_locked, is_credentials_expired, is_enabled)
+values ('a@gmail.com', 'a', 'a_username', 'a_firstname', 'a_lastname', 'USER', FALSE, FALSE, FALSE, TRUE),
+    ('b@gmail.com', 'b', 'b_username', 'b_firstname', 'b_lastname', 'USER', FALSE, FALSE, FALSE, TRUE),
+    ('c@envelo.com', 'c', 'c_username', 'c_firstname', 'c_lastname', 'ADMIN', FALSE, TRUE, TRUE, TRUE);
