@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.builder.builder.EventBuilder;
 import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.EventDtoBuilder;
-import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.Comment;
 import pl.mardom92.MeetingsApp.model.entity.Event;
 
-import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -43,8 +40,9 @@ public class EventMapper {
         }
 
         if (Objects.nonNull(eventDto.getCommentDtoList())) {
-            List<Comment> comments = commentMapper.fromDtosToEntities(eventDto.getCommentDtoList());
-            eventBuilder.withCommentList(comments);
+            eventBuilder.withCommentList(
+                    commentMapper.fromDtoListToEntityList(eventDto.getCommentDtoList())
+            );
         }
 
         if (Objects.nonNull(eventDto.getCreatedDate())) {
@@ -91,8 +89,9 @@ public class EventMapper {
         }
 
         if (Objects.nonNull(event.getCommentList())) {
-            List<CommentDto> commentDtos = commentMapper.fromEntitiesToDtos(event.getCommentList());
-            eventDtoBuilder.withCommentDtoList(commentDtos);
+            eventDtoBuilder.withCommentDtoList(
+                    commentMapper.fromEntityListToDtoList(event.getCommentList())
+            );
         }
 
         if (Objects.nonNull(event.getCreatedDate())) {

@@ -6,9 +6,9 @@ import pl.mardom92.MeetingsApp.model.builder.dtoBuilder.CommentDtoBuilder;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
 import pl.mardom92.MeetingsApp.model.entity.Comment;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class CommentMapper {
@@ -44,15 +44,11 @@ public class CommentMapper {
         return commentBuilder.build();
     }
 
-    public List<Comment> fromDtosToEntities(List<CommentDto> commentDtos) {
+    public List<Comment> fromDtoListToEntityList(List<CommentDto> commentDtoList) {
 
-        List<Comment> comments = new ArrayList<>();
-
-        for (CommentDto c : commentDtos) {
-            comments.add(fromDtoToEntity(c));
-        }
-
-        return comments;
+        return commentDtoList.stream()
+                .map(commentDto -> fromDtoToEntity(commentDto))
+                .collect(Collectors.toList());
     }
 
     public CommentDto fromEntityToDto(Comment comment) {
@@ -86,14 +82,10 @@ public class CommentMapper {
         return commentDtoBuilder.build();
     }
 
-    public List<CommentDto> fromEntitiesToDtos(List<Comment> comments) {
+    public List<CommentDto> fromEntityListToDtoList(List<Comment> commentList) {
 
-        List<CommentDto> commentDtos = new ArrayList<>();
-
-        for (Comment c : comments) {
-            commentDtos.add(fromEntityToDto(c));
-        }
-
-        return commentDtos;
+        return commentList.stream()
+                .map(comment -> fromEntityToDto(comment))
+                .collect(Collectors.toList());
     }
 }
