@@ -3,6 +3,7 @@ package pl.mardom92.MeetingsApp.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.mardom92.MeetingsApp.model.dto.CommentDto;
+import pl.mardom92.MeetingsApp.model.dto.EventDto;
 import pl.mardom92.MeetingsApp.service.comment.CommentService;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public class CommentController {
     @GetMapping("/single/{id}")
     public CommentDto getSingleComments(@PathVariable long id) {
         return commentService.getSingleComment(id);
+    }
+
+    @PostMapping("")
+    public void addComment(@RequestBody CommentDto commentDto) {
+        commentService.addComment(commentDto);
     }
 
     @PutMapping("/{id}")

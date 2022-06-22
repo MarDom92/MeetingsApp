@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.EventDto;
-import pl.mardom92.MeetingsApp.model.entity.CommentEntity;
 import pl.mardom92.MeetingsApp.model.entity.EventEntity;
 import pl.mardom92.MeetingsApp.model.enums.EventStatus;
 import pl.mardom92.MeetingsApp.model.mapper.EventMapper;
-import pl.mardom92.MeetingsApp.repository.CommentRepository;
 import pl.mardom92.MeetingsApp.repository.EventRepository;
 
 import java.time.LocalDateTime;
@@ -23,19 +21,26 @@ public class EventService {
     private final EventMapper eventMapper;
     private final EventServiceHelper eventServiceHelper;
 
-    private final CommentRepository commentRepository;
-
     public List<EventDto> getAllEventsByStatus(List<EventStatus> statusList,
                                                int pageNumber,
                                                int sizeOnPage) {
 
-        List<EventEntity> events = eventRepository.findAll();
+        int sizeOfList = Math.toIntExact(eventRepository.count());
 
-        int sizeOfList = eventServiceHelper.checkSizeOfList(events);
-
+        sizeOfList = eventServiceHelper.checkSizeOfList(sizeOfList);
         pageNumber = eventServiceHelper.checkPageNumber(pageNumber);
-
         sizeOnPage = eventServiceHelper.checkSizeOnPage(sizeOnPage, sizeOfList);
+
+        List<EventEntity> events = getAllOrSpecifiedNumberOfEventsByStatus(statusList, pageNumber, sizeOnPage);
+
+        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+    }
+
+    public List<EventEntity> getAllOrSpecifiedNumberOfEventsByStatus(List<EventStatus> statusList,
+                                                                     int pageNumber,
+                                                                     int sizeOnPage) {
+
+        List<EventEntity> events;
 
         if (statusList == null || statusList.isEmpty()) {
             events = eventRepository.findAll(PageRequest.of(pageNumber - 1, sizeOnPage)).toList();
@@ -43,12 +48,12 @@ public class EventService {
             events = eventRepository.findEventByStatusIn(statusList, PageRequest.of(pageNumber - 1, sizeOnPage));
         }
 
-        return events.stream().map(eventMapper::fromEntityToDto).collect(Collectors.toList());
+        return events;
     }
 
     public EventDto getSingleEvent(long id) {
 
-        EventEntity event = eventServiceHelper.checkEventExist(id);
+        EventEntity event = eventServiceHelper.checkIfEventExist(id);
 
         return eventMapper.fromEntityToDto(event);
     }
@@ -62,41 +67,41 @@ public class EventService {
         LocalDateTime now = LocalDateTime.now();
         event.setCreatedDate(now);
 
-        for (CommentEntity c : event.getCommentList()) {
-            c.setCreatedDate(now);
-        }
+        event.getCommentList().stream().forEach(commentEntity -> {
+            commentEntity.setCreatedDate(now);
+            commentEntity.setEvent_id(eventRepository.count() + 1);
+        });
 
         eventRepository.save(event);
-        commentRepository.saveAll(event.getCommentList());
     }
 
     public void editEventWithComments(long id, EventDto eventDto) {
 
+        EventEntity event = eventServiceHelper.checkIfEventExist(id);
+
         eventServiceHelper.checkEventDtoValues(eventDto);
 
-        EventEntity event = eventServiceHelper.checkEventExist(id);
-
-        LocalDateTime createdDate = eventRepository.findById(id).get().getCreatedDate();
+        LocalDateTime createdDate = event.getCreatedDate();
 
         event = eventMapper.fromDtoToEntity(eventDto);
 
         LocalDateTime now = LocalDateTime.now();
-
         event.setId(id);
         event.setCreatedDate(createdDate);
         event.setUpdatedDate(now);
 
-        for (CommentEntity c : event.getCommentList()) {
-            c.setCreatedDate(createdDate);
-            c.setUpdatedDate(now);
-        }
+        event.getCommentList().stream().forEach(commentEntity -> {
+            commentEntity.setCreatedDate(createdDate);
+            commentEntity.setUpdatedDate(now);
+            commentEntity.setEvent_id(id);
+        });
 
         eventRepository.save(event);
     }
 
     public void deleteEvent(long id) {
 
-        EventEntity event = eventServiceHelper.checkEventExist(id);
+        EventEntity event = eventServiceHelper.checkIfEventExist(id);
 
         eventRepository.delete(event);
     }

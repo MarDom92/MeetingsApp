@@ -34,7 +34,7 @@ public class EventEntity {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             fetch = FetchType.EAGER,
             orphanRemoval = true)
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "event_id", insertable = false, nullable = false)
     private List<CommentEntity> commentList;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

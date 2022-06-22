@@ -18,12 +18,12 @@ public class EventServiceHelper {
 
     private final EventRepository eventRepository;
 
-    protected int checkSizeOfList(List<EventEntity> events) {
+    protected int checkSizeOfList(int size) {
 
-        if (events.isEmpty()) {
+        if (size <= 0) {
             throw new EventException(EventError.EVENT_EMPTY_LIST);
         } else {
-            return events.size();
+            return size;
         }
     }
 
@@ -49,7 +49,7 @@ public class EventServiceHelper {
         return sizeOnPage;
     }
 
-    protected EventEntity checkEventExist(long id) {
+    protected EventEntity checkIfEventExist(long id) {
 
         return eventRepository.findById(id)
                 .orElseThrow(() -> new EventException(EventError.EVENT_NOT_FOUND));

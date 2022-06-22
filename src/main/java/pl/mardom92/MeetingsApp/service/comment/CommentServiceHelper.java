@@ -16,12 +16,12 @@ public class CommentServiceHelper {
 
     private final CommentRepository CommentRepository;
 
-    protected int checkSizeOfList(List<CommentEntity> comments) {
+    protected int checkSizeOfList(int size) {
 
-        if (comments.isEmpty()) {
+        if (size <= 0) {
             throw new CommentException(CommentError.COMMENT_EMPTY_LIST);
         } else {
-            return comments.size();
+            return size;
         }
     }
 
