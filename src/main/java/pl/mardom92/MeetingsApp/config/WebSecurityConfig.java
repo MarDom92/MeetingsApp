@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 import javax.annotation.Resource;
 
@@ -44,24 +43,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-//        http.httpBasic()
-//                .and().authorizeRequests()
-//                .antMatchers("/").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/events/*").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/comments/*").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/users/*").hasRole("ADMIN")
+        http.httpBasic()
+                .and().authorizeRequests()
+                .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/users/**").hasAuthority("ADMIN")
 //                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .defaultSuccessUrl("/events", true)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login")
-//                .permitAll();
+                .and()
+                .formLogin()
+                .defaultSuccessUrl("/events", true)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll();
 
         http.cors().and().csrf().disable();
-
-        http.authorizeRequests().antMatchers("/**").permitAll();
     }
 }
