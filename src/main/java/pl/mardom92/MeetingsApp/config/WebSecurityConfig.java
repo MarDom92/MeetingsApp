@@ -43,19 +43,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.httpBasic()
-                .and().authorizeRequests()
-                .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/users/**").hasAuthority("ADMIN")
-//                .anyRequest().authenticated()
-                .and()
+        http
+                .httpBasic()
+                    .and()
+                .authorizeRequests()
+                //TODO: fix - roles when login by OAuth2
+//                    .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
+//                    .antMatchers("/users/**").hasAuthority("ADMIN")
+                    .and()
+                .authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .defaultSuccessUrl("/events", true)
-                .and()
+                    .defaultSuccessUrl("/events")
+                    .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll();
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login").permitAll()
+                    .and()
+                .oauth2Login()
+                    .defaultSuccessUrl("/events").permitAll();
 
         http.cors().and().csrf().disable();
     }
