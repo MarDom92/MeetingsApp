@@ -47,20 +47,20 @@ public class WebSecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                //TODO: fix - roles when login by OAuth2
-//                    .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
-//                    .antMatchers("/users/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/events/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                    .antMatchers("/comments/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                    .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .defaultSuccessUrl("/events")
-                .and()
+                    .defaultSuccessUrl("/events")
+                    .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login").permitAll()
-                .and()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login").permitAll()
+                    .and()
                 .oauth2Login()
-                .defaultSuccessUrl("/events").permitAll();
+                    .defaultSuccessUrl("/events");
 
         http.cors().and().csrf().disable();
 
