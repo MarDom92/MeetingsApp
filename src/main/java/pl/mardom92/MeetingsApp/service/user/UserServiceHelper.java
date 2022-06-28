@@ -1,6 +1,7 @@
 package pl.mardom92.MeetingsApp.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Component;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
 import pl.mardom92.MeetingsApp.model.entity.UserEntity;
@@ -35,6 +36,16 @@ public class UserServiceHelper {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
     }
+
+    protected AuthenticatedPrincipal checkAuthenticatedPrincipal(AuthenticatedPrincipal principal) {
+
+        if (principal == null) {
+            throw new UserException(UserError.USER_IS_NOT_AUTHENTICATED);
+        }
+
+        return principal;
+    }
+
 
     protected void checkUserDtoValues(UserDto userDto) {
 

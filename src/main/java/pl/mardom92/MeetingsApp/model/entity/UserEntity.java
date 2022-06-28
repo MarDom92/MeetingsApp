@@ -5,16 +5,19 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import pl.mardom92.MeetingsApp.model.enums.UserRole;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
 @Entity
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails, OAuth2User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +43,15 @@ public class UserEntity implements UserDetails {
     boolean isCredentialsExpired;
     @Column(name = "is_enabled")
     boolean isEnabled;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("email", email);
+        return map;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,5 +81,10 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    @Override
+    public String getName() {
+        return username;
     }
 }

@@ -1,6 +1,8 @@
 package pl.mardom92.MeetingsApp.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import pl.mardom92.MeetingsApp.model.dto.UserDto;
 import pl.mardom92.MeetingsApp.model.entity.UserEntity;
@@ -43,6 +45,11 @@ public class UserService {
         UserEntity user = userServiceHelper.checkUserExist(id);
 
         return userMapper.fromEntityToDto(user);
+    }
+
+    public AuthenticatedPrincipal getAuthenticatedPrincipalInfo(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
+
+        return userServiceHelper.checkAuthenticatedPrincipal(principal);
     }
 
     public void addUser(UserDto userDto) {

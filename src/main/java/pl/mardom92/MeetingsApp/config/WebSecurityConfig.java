@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                     .antMatchers("/events/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                     .antMatchers("/comments/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-                    .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                    .antMatchers("/users/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
@@ -59,6 +59,7 @@ public class WebSecurityConfig {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login").permitAll()
                     .and()
+                //replace deprecated @EnableOAuth2Sso
                 .oauth2Login()
                     .defaultSuccessUrl("/events");
 
